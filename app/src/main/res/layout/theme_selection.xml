@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/yelmo" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="SELECCIONA TEMA"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+   <Button
+        android:id="@+id/bt_vikingo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_above="@+id/view1"
+        android:layout_toRightOf="@+id/view1"
+        android:onClick="selectTheme"
+        android:background="@drawable/y_vikingo" />
+   
+   <Button
+        android:id="@+id/bt_japon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_toLeftOf="@+id/view1"
+        android:layout_above="@+id/view1"
+        android:layout_marginTop="93dp"
+        android:background="@drawable/y_japon"
+        android:onClick="selectTheme" />
+    
+    <Button
+        android:id="@+id/bt_egipto"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_toRightOf="@+id/view1"
+        android:layout_below="@+id/view1"
+        android:onClick="selectTheme"
+        android:background="@drawable/y_egipto"/>
+
+    <Button
+        android:id="@+id/bt_hyrule"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_toLeftOf="@+id/view1"
+        android:layout_below="@+id/view1"
+        android:background="@drawable/y_hyrule"
+        android:onClick="selectTheme" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+</RelativeLayout>
