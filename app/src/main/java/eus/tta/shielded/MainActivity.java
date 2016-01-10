@@ -79,34 +79,53 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 	//Metodo para pasar al menú inicial
 	@Override
-	public void toMenu(){
+	public void toMenuVista(){
 		setContentView(R.layout.menu);
 		state = IA;
+	}
+	//Metodo para ir al modo Campaña
+	@Override
+	public void toCampanaVista(){
+		//Proximanente
+	}
+	@Override
+	public void toMatchVista(){
+		setContentView(R.layout.menu_match);
+	}
+	//Metodo para ir al modo Versus
+	@Override
+	public void toVSVista(){
+		setContentView(R.layout.menu_vs);
+	}
+	//Metodo para ir a Ajustes
+	@Override
+	public void toSettingsVista(){
+		//Proximamente
 	}
 
 	/*-- Métodos de clase --*/
 	//Método para pasar al menú inicial
 	public void toMenu(View view){
-		presentador.comenzar();
+		presentador.toMenuPresenterVista();
 	}
 	//Metodo para ir al modo Campaña
 	public void toCampana(View view){
-		//Proximamente
+		presentador.toCampanaPresenterVista();
 	}
 
 	//Metodo para ir al modo Partida Rapida
 	public void toMatch(View view){
-		setContentView(R.layout.menu_match);
+		presentador.toMatchPresenterVista();
 	}
 
 	//Metodo para ir al modo Versus
 	public void toVS (View view){
-		setContentView(R.layout.menu_vs);
+		presentador.toVSPresenterVista();
 	}
 
 	//Metodo para ir a Ajustes
 	public void toSettings (View view){
-		//Proximamente
+		presentador.toSettingsPresenterVista();
 	}
 
 
