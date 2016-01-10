@@ -58,6 +58,7 @@ public class HardIA implements IA {
 	/* (non-Javadoc)
 	 * @see com.example.shielded2.IA#turn()
 	 */
+	@Override
 	public int turn(){
 		/*comprobar cuadrados*/
 		int act=-1;

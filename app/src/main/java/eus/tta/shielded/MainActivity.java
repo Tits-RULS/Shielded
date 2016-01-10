@@ -3,10 +3,8 @@ package eus.tta.shielded;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -67,7 +65,7 @@ public class MainActivity extends Activity {
 	        requestWindowFeature(Window.FEATURE_NO_TITLE);
 	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 	            WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	        setContentView(R.layout.activity_main);
+	        setContentView(R.layout.cover);
 	        player = MediaPlayer.create(this, R.raw.menu2);
 			player.setLooping(true);
 			state = MENU;
@@ -112,7 +110,7 @@ public class MainActivity extends Activity {
     	 */
     	public void toThemeIA(View view){
 	    	ia=true;
-	    	setContentView(R.layout.theme_selection);
+	    	setContentView(R.layout.menu_theme);
 	    	state = THEME;
 	    	int id = view.getId();
 	    	switch(id){
@@ -135,7 +133,7 @@ public class MainActivity extends Activity {
     	 * @param view the view
     	 */
     	public void toTheme(View view){
-	    	setContentView(R.layout.theme_selection);
+	    	setContentView(R.layout.menu_theme);
 	    	state = THEME;
 	    }
 	    
@@ -146,7 +144,7 @@ public class MainActivity extends Activity {
     	 */
     	public void toThemeBT(View view){
 	    	bt=true;
-	    	setContentView(R.layout.theme_selection);
+	    	setContentView(R.layout.menu_theme);
 	    	state = THEME;
 	    	switch(view.getId()){
 	    	case R.id.server:
@@ -165,7 +163,7 @@ public class MainActivity extends Activity {
     	 * To maps.
     	 */
     	public void toMaps(){
-	    	setContentView(R.layout.map_selection);
+	    	setContentView(R.layout.menu_dimension);
 	    	state = MAP;
 	    }
 	    
@@ -272,7 +270,7 @@ public class MainActivity extends Activity {
 	    	case MAP:
 	    		break;
 	    	case GAME:
-	    		setContentView(R.layout.activity_main);
+	    		setContentView(R.layout.cover);
 	    		state = MENU;
 	    		break;
 	    	}
@@ -298,7 +296,7 @@ public class MainActivity extends Activity {
 	    		super.onBackPressed();
 	    		break;
 	    	case IA:
-	    		setContentView(R.layout.activity_main);
+	    		setContentView(R.layout.cover);
 	    		state = MENU;
 	    		break;
 	    	case THEME:
@@ -308,11 +306,11 @@ public class MainActivity extends Activity {
 	    		bt=false;
 	    		break;
 	    	case MAP:
-	    		setContentView(R.layout.theme_selection);
+	    		setContentView(R.layout.menu_theme);
 	    		state = THEME;
 	    		break;
 	    	case GAME:
-	    		setContentView(R.layout.activity_main);
+	    		setContentView(R.layout.cover);
 	    		break;
 	    	}
 	    }

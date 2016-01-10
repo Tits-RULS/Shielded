@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Shielded</string>
     <string name="action_settings">Settings</string>
+    <!-- Strings para el apartado de menus -->
+    <string name="menu_campana">Campaña</string>
+    <string name="menu_partida">Partida Rápica</string>
+    <string name="menu_vs">VS</string>
+    <string name="menu_1vs1">1vs1</string>
+    <string name="menu_online">Online</string>
+    <string name="menu_bluetooth">Bluetooth</string>
+    <string name="menu_facil">Fácil</string>
+    <string name="menu_medio">Medio</string>
+    <string name="menu_dificil">Difícil</string>
 </resources>
