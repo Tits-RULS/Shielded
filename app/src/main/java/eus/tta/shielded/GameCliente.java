@@ -108,7 +108,6 @@ public class GameCliente extends Game{
 	@Override
 	protected void onResume(){
 		if(first){
-			System.out.println("GESTION BT");
 			first=false;
 			super.onResume();
 			act=this;
