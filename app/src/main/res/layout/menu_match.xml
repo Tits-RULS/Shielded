@@ -1,35 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/yelmo">
 
+    <!-- Info del jugador activo -->
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:columnCount="2"
         android:rowCount="1">
+        <!-- Nombre de usuario -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/user_name"/>
+        <!-- Foto de perfil -->
         <ImageView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/user_pic" />
     </GridLayout>
 
-    <Button
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/menu_facil"/>
+        android:text="@string/match_title"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/menu_medio"/>
+        android:text="@string/match_easy"
+        android:onClick="toThemeIA" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/menu_dificil"/>
+        android:text="@string/match_medium"
+        android:onClick="toThemeIA" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/match_hard"
+        android:onClick="toThemeIA" />
 
 </LinearLayout>

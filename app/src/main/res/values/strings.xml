@@ -1,10 +1,19 @@
 <resources>
     <string name="app_name">Shielded</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings para el apartado de menus -->
-    <string name="menu_campana">Campaña</string>
-    <string name="menu_partida">Partida Rápica</string>
+    <!-- Strings para el menu inicial -->
+    <string name="menu_campana">Campaña (proximamente)</string>
+    <string name="menu_partida">Partida Rápida</string>
     <string name="menu_vs">VS</string>
+    <string name="menu_ajustes">Ajustes</string>
+    <!-- Strings para el menu Partida Rapida -->
+    <string name="match_title">SELECCIONA DIFICULTAD</string>
+    <string name="match_easy">Facil</string>
+    <string name="match_medium">Medio</string>
+    <string name="match_hard">Dificil</string>
+
+
+    <!-- Otros -->
     <string name="menu_1vs1">1vs1</string>
     <string name="menu_online">Online</string>
     <string name="menu_bluetooth">Bluetooth</string>

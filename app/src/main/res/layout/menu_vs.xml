@@ -20,7 +20,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/menu_1vs1"/>
+        android:text="@string/menu_1vs1"
+        android:onClick="toTheme"/>
 
     <Button
         android:layout_width="match_parent"
