@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
 	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 	            WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	        setContentView(R.layout.cover);
-	        player = MediaPlayer.create(this, R.raw.menu2);
+	        player = MediaPlayer.create(this, R.raw.menu);
 			player.setLooping(true);
 			state = MENU;
 			theme = 0;
