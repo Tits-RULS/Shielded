@@ -26,6 +26,12 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name=".GameActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".GameIA"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"

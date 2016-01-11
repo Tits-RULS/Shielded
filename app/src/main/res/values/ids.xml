@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Botones verticales -->
+    <item name="game_stickV_0_0" type="id"/>
+    <item name="game_stickV_0_1" type="id"/>
+    <item name="game_stickV_0_2" type="id"/>
+    <item name="game_stickV_0_3" type="id"/>
+    <item name="game_stickV_0_4" type="id"/>
+    <item name="game_stickV_1_0" type="id"/>
+    <item name="game_stickV_1_1" type="id"/>
+    <item name="game_stickV_1_2" type="id"/>
+    <item name="game_stickV_1_3" type="id"/>
+    <item name="game_stickV_1_4" type="id"/>
+    <item name="game_stickV_2_0" type="id"/>
+    <item name="game_stickV_2_1" type="id"/>
+    <item name="game_stickV_2_2" type="id"/>
+    <item name="game_stickV_2_3" type="id"/>
+    <item name="game_stickV_2_4" type="id"/>
+    <item name="game_stickV_3_0" type="id"/>
+    <item name="game_stickV_3_1" type="id"/>
+    <item name="game_stickV_3_2" type="id"/>
+    <item name="game_stickV_3_3" type="id"/>
+    <item name="game_stickV_3_4" type="id"/>
+    <item name="game_stickV_4_0" type="id"/>
+    <item name="game_stickV_4_1" type="id"/>
+    <item name="game_stickV_4_2" type="id"/>
+    <item name="game_stickV_4_3" type="id"/>
+
+    <!-- Botones horizontales -->
+    <item name="game_stickH_0_0" type="id"/>
+    <item name="game_stickH_0_1" type="id"/>
+    <item name="game_stickH_0_2" type="id"/>
+    <item name="game_stickH_0_3" type="id"/>
+    <item name="game_stickH_1_0" type="id"/>
+    <item name="game_stickH_1_1" type="id"/>
+    <item name="game_stickH_1_2" type="id"/>
+    <item name="game_stickH_1_3" type="id"/>
+    <item name="game_stickH_2_0" type="id"/>
+    <item name="game_stickH_2_1" type="id"/>
+    <item name="game_stickH_2_2" type="id"/>
+    <item name="game_stickH_2_3" type="id"/>
+    <item name="game_stickH_3_0" type="id"/>
+    <item name="game_stickH_3_1" type="id"/>
+    <item name="game_stickH_3_2" type="id"/>
+    <item name="game_stickH_3_3" type="id"/>
+    <item name="game_stickH_4_0" type="id"/>
+    <item name="game_stickH_4_1" type="id"/>
+    <item name="game_stickH_4_2" type="id"/>
+    <item name="game_stickH_4_3" type="id"/>
+    <item name="game_stickH_5_0" type="id"/>
+    <item name="game_stickH_5_1" type="id"/>
+    <item name="game_stickH_5_2" type="id"/>
+    <item name="game_stickH_5_3" type="id"/>
+
+    <!-- View para los cuadrados -->
+    <item name="game_square_0_0" type="id"/>
+    <item name="game_square_0_1" type="id"/>
+    <item name="game_square_0_2" type="id"/>
+    <item name="game_square_0_3" type="id"/>
+    <item name="game_square_1_0" type="id"/>
+    <item name="game_square_1_1" type="id"/>
+    <item name="game_square_1_2" type="id"/>
+    <item name="game_square_1_3" type="id"/>
+    <item name="game_square_2_0" type="id"/>
+    <item name="game_square_2_1" type="id"/>
+    <item name="game_square_2_2" type="id"/>
+    <item name="game_square_2_3" type="id"/>
+    <item name="game_square_3_0" type="id"/>
+    <item name="game_square_3_1" type="id"/>
+    <item name="game_square_3_2" type="id"/>
+    <item name="game_square_3_3" type="id"/>
+    <item name="game_square_4_0" type="id"/>
+    <item name="game_square_4_1" type="id"/>
+    <item name="game_square_4_2" type="id"/>
+    <item name="game_square_4_3" type="id"/>
+
+</resources>

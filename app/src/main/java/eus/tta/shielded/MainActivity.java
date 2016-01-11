@@ -284,7 +284,8 @@ public class MainActivity extends Activity implements IF_pv_menu{
 				intent = new Intent(getBaseContext(),GameServer.class);
 			}
 			else{
-				intent = new Intent(getBaseContext(), Game.class);
+				/*Linea para llamar al juego en versión MVP (no tocar)*/
+				intent = new Intent(getBaseContext(), GameActivity.class);
 			}
 		}
 		int id = view.getId();
