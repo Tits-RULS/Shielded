@@ -8,6 +8,8 @@ import android.view.View;
 
 //Interfaz que comunica al presentador con la vista
 public interface IF_pv_menu {
+    public void toCoverVista();
+
     public void toMenuVista();
     /*-- Métodos de clase --*/
     //Metodo para ir al modo Campaña
@@ -21,4 +23,10 @@ public interface IF_pv_menu {
 
     //Metodo para ir a Ajustes
     public void toSettingsVista ();
+
+    public void toThemeVista();
+
+    public void toMapsVista();
+
+    public void toExitVista();
 }

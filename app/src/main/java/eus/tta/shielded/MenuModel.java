@@ -6,34 +6,67 @@ package eus.tta.shielded;
 public class MenuModel implements IF_pm_menu{
     /*-- Atributos --*/
     IF_mp_menu presentador;
-    private short state; //Estado en el que se encuentra la aplicacion
-    private final int IA = 1; //IA activa (1) o no (0)
+
+    private final int COVER = 0;
+    private final int MENU = 1;		//
+    private final int MATCH = 2;
+    private final int THEME = 3;	//select theme
+    private final int MAP = 4;		//select map
+    private final int GAME = 5;		//playing
+    private final int HISTORY = 6;
+    private final int SETTINGS = 7;
+    private int IA=0; //IA activa (1) o no (0)
+    private short state = COVER; //Estado en el que se encuentra la aplicacion
 
     public MenuModel(IF_mp_menu presentador){
         this.presentador=presentador;
     }
 
     @Override
-    public void toMenuModelo(){
-        state=IA;
-        presentador.toMenuPresenterModelo();
-        System.out.println("Baja hasta el modelo" + state);
+    public void toCoverModelo(){
+        state=COVER;
+        IA=0;
+        presentador.toPresenterModelo(state,IA);
+    }
+    @Override
+    public void toMenuModelo() {
+        state=MENU;
+        IA=0;
+        presentador.toPresenterModelo(state, IA);
     }
     @Override
     public void toCampanaModelo(){
-        state=IA;
-        System.out.println("Baja hasta el modelo 2");
+        state=HISTORY;
+        IA=0;
+        presentador.toPresenterModelo(state, IA);
     }
     @Override
-    public void toMatchModelo(){
-        state=IA;
+    public void toMatchModelo() {
+        state=MATCH;
+        IA=1;
+        presentador.toPresenterModelo(state, IA);
     }
     @Override
-    public void toVSModelo(){
-        state=IA;
+    public void toVSModelo() {
+        state=MATCH;
+        IA=0;
+        presentador.toPresenterModelo(state, IA);
     }
     @Override
     public void toSettingsModelo(){
-        state=IA;
+        state=SETTINGS;
+        IA=0;
+        presentador.toPresenterModelo(state, IA);
+    }
+    @Override
+    public void toThemeModelo(){
+        state=THEME;
+        presentador.toPresenterModelo(state, IA);
+    }
+
+    @Override
+    public void toMapsModelo(){
+        state=MAP;
+        presentador.toPresenterModelo(state,IA);
     }
 }

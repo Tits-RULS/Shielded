@@ -55,7 +55,6 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		setContentView(R.layout.cover);
 		player = MediaPlayer.create(this, R.raw.menu);
 		player.setLooping(true);
-		state = MENU;
 		theme = 0;
 		presentador = new MenuPresenter(this);
 	}
@@ -77,11 +76,14 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 	}
 
+	@Override
+	public void toCoverVista(){
+		setContentView(R.layout.cover);
+	}
 	//Metodo para pasar al menú inicial
 	@Override
 	public void toMenuVista(){
 		setContentView(R.layout.menu);
-		state = IA;
 	}
 	//Metodo para ir al modo Campaña
 	@Override
@@ -103,7 +105,25 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		//Proximamente
 	}
 
+	@Override
+	public void toThemeVista(){
+		setContentView(R.layout.menu_theme);
+	}
+
+	@Override
+	public void toMapsVista(){
+		setContentView(R.layout.menu_dimension);
+	}
+
+	@Override
+	public void toExitVista(){
+		super.onBackPressed();
+	}
+
 	/*-- Métodos de clase --*/
+	public void toCover(View view){
+		presentador.toCoverPresenterVista();
+	}
 	//Método para pasar al menú inicial
 	public void toMenu(View view){
 		presentador.toMenuPresenterVista();
@@ -128,6 +148,42 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		presentador.toSettingsPresenterVista();
 	}
 
+	public void toTheme (View view){
+		presentador.toThemePresenterVista();
+	}
+
+	public void toMaps (View view) {
+		presentador.toMapsPresenterVista();
+	}
+
+	@Override
+	public void onBackPressed() {
+
+		presentador.onBackPressedPresenterVista();
+		/*System.out.println("back");
+		switch(state){
+		case MENU:
+			//super.onBackPressed();
+			break;
+		case IA:
+			setContentView(R.layout.cover);
+			state = MENU;
+			break;
+		case THEME:
+			setContentView(R.layout.menu_match);
+			state = IA;
+			ia=false;
+			bt=false;
+			break;
+		case MAP:
+			setContentView(R.layout.menu_theme);
+			state = THEME;
+			break;
+		case GAME:
+			setContentView(R.layout.cover);
+			break;
+		}*/
+	}
 
 
 	/**
@@ -137,8 +193,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	 */
 	public void toThemeIA(View view){
 		ia=true;
-		setContentView(R.layout.menu_theme);
-		state = THEME;
+		toTheme(view);
 		int id = view.getId();
 		switch(id){
 		case R.id.bt_easy:
@@ -155,24 +210,13 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	}
 
 	/**
-	 * To theme.
-	 *
-	 * @param view the view
-	 */
-	public void toTheme(View view){
-		setContentView(R.layout.menu_theme);
-		state = THEME;
-	}
-
-	/**
 	 * To theme bt.
 	 *
 	 * @param view the view
 	 */
 	public void toThemeBT(View view){
 		bt=true;
-		setContentView(R.layout.menu_theme);
-		state = THEME;
+		toTheme(view);
 		switch(view.getId()){
 		case R.id.server:
 			btRole=1;
@@ -186,13 +230,6 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 	}
 
-	/**
-	 * To maps.
-	 */
-	public void toMaps(){
-		setContentView(R.layout.menu_dimension);
-		state = MAP;
-	}
 
 	/**
 	 * Select theme.
@@ -228,7 +265,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 			}
 
 		}
-		toMaps();
+		toMaps(view);
 	}
 
 	/**
@@ -315,32 +352,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	/**
 	 * On back pressed.
 	 */
-	@Override
-	public void onBackPressed() {
-		System.out.println("back");
-		switch(state){
-		case MENU:
-			super.onBackPressed();
-			break;
-		case IA:
-			setContentView(R.layout.cover);
-			state = MENU;
-			break;
-		case THEME:
-			setContentView(R.layout.menu_match);
-			state = IA;
-			ia=false;
-			bt=false;
-			break;
-		case MAP:
-			setContentView(R.layout.menu_theme);
-			state = THEME;
-			break;
-		case GAME:
-			setContentView(R.layout.cover);
-			break;
-		}
-	}
+
 
 
 }
