@@ -25,6 +25,7 @@
     <item name="game_stickV_4_1" type="id"/>
     <item name="game_stickV_4_2" type="id"/>
     <item name="game_stickV_4_3" type="id"/>
+    <item name="game_stickV_4_4" type="id"/>
 
     <!-- Botones horizontales -->
     <item name="game_stickH_0_0" type="id"/>

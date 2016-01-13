@@ -112,7 +112,7 @@ public class GameModel implements IF_pm_game {
                 if(player1.isTurn()){
                     presenter.activeStick(x,y,1,vertical);
                 }else{
-                    presenter.activeStick(x,y,1,vertical);
+                    presenter.activeStick(x,y,2,vertical);
                 }
                 /*comprobar si es una esquina*/
                 if(y==0||y==yTam){
@@ -124,11 +124,11 @@ public class GameModel implements IF_pm_game {
                             squareAct = true;
                             squaresActivated++;
                             if(player1.isTurn()){
-                                presenter.activeSquare(x,y,1);
                                 player1.addPoint();
+                                presenter.activeSquare(x,y,1);
                             }else {
-                                presenter.activeSquare(x,y,2);
                                 player2.addPoint();
+                                presenter.activeSquare(x,y,2);
                             }
                         }
                     }else{
@@ -138,11 +138,11 @@ public class GameModel implements IF_pm_game {
                             squareAct = true;
                             squaresActivated++;
                             if(player1.isTurn()){
-                                presenter.activeSquare(x,y-1,1);
                                 player1.addPoint();
+                                presenter.activeSquare(x,y-1,1);
                             }else {
-                                presenter.activeSquare(x,y-1,2);
                                 player2.addPoint();
+                                presenter.activeSquare(x,y-1,2);
                             }
                         }
                     }
@@ -154,11 +154,11 @@ public class GameModel implements IF_pm_game {
                         squareAct = true;
                         squaresActivated++;
                         if(player1.isTurn()){
-                            presenter.activeSquare(x,y-1,1);
                             player1.addPoint();
+                            presenter.activeSquare(x,y-1,1);
                         }else {
-                            presenter.activeSquare(x,y-1,2);
                             player2.addPoint();
+                            presenter.activeSquare(x,y-1,2);
                         }
                     }
                     /*comprobar segundo cuadrado*/
@@ -167,11 +167,11 @@ public class GameModel implements IF_pm_game {
                         squareAct = true;
                         squaresActivated++;
                         if(player1.isTurn()){
-                            presenter.activeSquare(x,y,1);
                             player1.addPoint();
+                            presenter.activeSquare(x,y,1);
                         }else {
-                            presenter.activeSquare(x,y,2);
                             player2.addPoint();
+                            presenter.activeSquare(x,y,2);
                         }
                     }
                 }
@@ -181,6 +181,11 @@ public class GameModel implements IF_pm_game {
             if(horizontal[x][y].activateStick()){
                 /*palo activado*/
                 stickAct = true;
+                if(player1.isTurn()){
+                    presenter.activeStick(x,y,1,vertical);
+                }else{
+                    presenter.activeStick(x,y,2,vertical);
+                }
                 /*comprobar si es esquina*/
                 if(x==0||x==xTam){
                     /*un solo cuadrado*/
@@ -191,11 +196,11 @@ public class GameModel implements IF_pm_game {
                             squareAct = true;
                             squaresActivated++;
                             if(player1.isTurn()){
-                                presenter.activeSquare(x,y,1);
                                 player1.addPoint();
+                                presenter.activeSquare(x,y,1);
                             }else {
-                                presenter.activeSquare(x,y,2);
                                 player2.addPoint();
+                                presenter.activeSquare(x,y,2);
                             }
                         }
                     }else{
@@ -205,11 +210,11 @@ public class GameModel implements IF_pm_game {
                             squareAct = true;
                             squaresActivated++;
                             if(player1.isTurn()){
-                                presenter.activeSquare(x-1,y,1);
                                 player1.addPoint();
+                                presenter.activeSquare(x-1,y,1);
                             }else {
-                                presenter.activeSquare(x-1,y,2);
                                 player2.addPoint();
+                                presenter.activeSquare(x-1,y,2);
                             }
                         }
                     }
@@ -221,11 +226,11 @@ public class GameModel implements IF_pm_game {
                         squareAct = true;
                         squaresActivated++;
                         if(player1.isTurn()){
-                            presenter.activeSquare(x-1,y,1);
                             player1.addPoint();
+                            presenter.activeSquare(x-1,y,1);
                         }else {
-                            presenter.activeSquare(x-1,y,2);
                             player2.addPoint();
+                            presenter.activeSquare(x-1,y,2);
                         }
                     }
                     /*comprobar cuadrado inferior*/
@@ -234,11 +239,11 @@ public class GameModel implements IF_pm_game {
                         squareAct = true;
                         squaresActivated++;
                         if(player1.isTurn()){
-                            presenter.activeSquare(x,y,1);
                             player1.addPoint();
+                            presenter.activeSquare(x,y,1);
                         }else {
-                            presenter.activeSquare(x,y,2);
                             player2.addPoint();
+                            presenter.activeSquare(x,y,2);
                         }
                     }
                 }
@@ -252,6 +257,7 @@ public class GameModel implements IF_pm_game {
                 /*no se ha activado cuadrado, cambio de turno*/
                 player1.changeTurn(1);
                 player2.changeTurn(1);
+                presenter.changeTurn();
             }else{
                 /*comprobar si se ha terminado el juego*/
                 if(squaresActivated>=squares){

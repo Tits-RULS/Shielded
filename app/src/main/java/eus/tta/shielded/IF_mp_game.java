@@ -10,4 +10,6 @@ public interface IF_mp_game {
     void activeSquare(int x, int y, int user);
 
     void finish(int score1, int score2);
+
+    void changeTurn();
 }

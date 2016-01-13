@@ -26,7 +26,7 @@ public class GamePresenter implements IF_vp_game, IF_mp_game{
 
     @Override
     public void stickPressed(int x, int y, boolean vertical) {
-        model.stickPressed(x,y,vertical);
+        model.stickPressed(x, y, vertical);
     }
 
     @Override
@@ -54,10 +54,17 @@ public class GamePresenter implements IF_vp_game, IF_mp_game{
     @Override
     public void activeSquare(int x, int y, int user) {
         vista.activeSquare(x,y,user);
+        int scores [] = model.getScores();
+        this.vista.changeScore(scores[0], scores[1]);
     }
 
     @Override
     public void finish(int score1, int score2){
+        vista.finish(score1, score2);
+    }
 
+    @Override
+    public void changeTurn(){
+        this.vista.changeTurn(model.getTurn());
     }
 }

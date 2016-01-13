@@ -307,21 +307,17 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
     @Override
     public void onClick(View v) {
         int id = v.getId();
+        Log.i("demo","id: "+id);
         String name = getResources().getResourceName(id);
         name = name.substring((name.length()-5));
-        Log.i("demo","name: "+name);
         boolean vertical;
         int x,y;
         char c = name.charAt(0);
-        Log.i("demo","c: "+c);
         vertical = (c=='V');
         c=name.charAt(2);
-        Log.i("demo","c1: "+c);
         x = Character.getNumericValue(c);
         c=name.charAt(4);
-        Log.i("demo","c2: "+c);
         y = Character.getNumericValue(c);
-        Log.i("demo","x: "+x+" y: "+y+" vertical: "+vertical);
         presenter.stickPressed(x, y, vertical);
     }
 
