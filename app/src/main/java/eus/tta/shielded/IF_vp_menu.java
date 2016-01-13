@@ -13,12 +13,16 @@ public interface IF_vp_menu {
     public void toCampanaPresenterVista();
     //Metodo para ir al modo Partida Rapida
     public void toMatchPresenterVista();
+
+    public void selectIAPresenterVista(int id);
     //Metodo para ir al modo Versus
     public void toVSPresenterVista ();
     //Metodo para ir a Ajustes
     public void toSettingsPresenterVista ();
 
     public void toThemePresenterVista();
+
+    public void selectThemePresenterVista(int id);
 
     public void toMapsPresenterVista();
 

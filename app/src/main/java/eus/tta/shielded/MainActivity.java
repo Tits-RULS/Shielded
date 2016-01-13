@@ -138,6 +138,12 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		presentador.toMatchPresenterVista();
 	}
 
+	public void selectIA(View view){
+		int id = view.getId();
+		presentador.selectIAPresenterVista(id);
+		toTheme(view);
+	}
+
 	//Metodo para ir al modo Versus
 	public void toVS (View view){
 		presentador.toVSPresenterVista();
@@ -152,37 +158,33 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		presentador.toThemePresenterVista();
 	}
 
+	public void selectTheme(View view){
+		int id = view.getId();
+		presentador.selectThemePresenterVista(id);
+
+		if(bt){
+			if(btRole==2){
+				//lanzar la actividad clientes
+				Intent intent;
+				state=GAME;
+				intent = new Intent(getBaseContext(),GameCliente.class);
+				intent.putExtra("theme",theme);
+				intent.putExtra("map", -1);
+				startActivity(intent);
+				return;
+			}
+
+		}
+		toMaps(view);
+	}
+
 	public void toMaps (View view) {
 		presentador.toMapsPresenterVista();
 	}
 
 	@Override
 	public void onBackPressed() {
-
 		presentador.onBackPressedPresenterVista();
-		/*System.out.println("back");
-		switch(state){
-		case MENU:
-			//super.onBackPressed();
-			break;
-		case IA:
-			setContentView(R.layout.cover);
-			state = MENU;
-			break;
-		case THEME:
-			setContentView(R.layout.menu_match);
-			state = IA;
-			ia=false;
-			bt=false;
-			break;
-		case MAP:
-			setContentView(R.layout.menu_theme);
-			state = THEME;
-			break;
-		case GAME:
-			setContentView(R.layout.cover);
-			break;
-		}*/
 	}
 
 
@@ -191,23 +193,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	 *
 	 * @param view the view
 	 */
-	public void toThemeIA(View view){
-		ia=true;
-		toTheme(view);
-		int id = view.getId();
-		switch(id){
-		case R.id.bt_easy:
-			iaDificult=1;
-			break;
-		case R.id.bt_medium:
-			iaDificult=2;
-			break;
-		case R.id.bt_hard:
-			iaDificult=3;
-			break;
 
-		}
-	}
 
 	/**
 	 * To theme bt.
@@ -236,37 +222,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	 *
 	 * @param view the view
 	 */
-	public void selectTheme(View view){
-		int id = view.getId();
-		switch(id){
-		case R.id.bt_japon:
-			theme = 1;
-			break;
-		case R.id.bt_vikingo:
-			theme = 2;
-			break;
-		case R.id.bt_egipto:
-			theme = 3;
-			break;
-		case R.id.bt_hyrule:
-			theme = 4;
-			break;
-		}
-		if(bt){
-			if(btRole==2){
-				//lanzar la actividad clientes
-				Intent intent;
-				state=GAME;
-				intent = new Intent(getBaseContext(),GameCliente.class);
-				intent.putExtra("theme",theme);
-				intent.putExtra("map", -1);
-				startActivity(intent);
-				return;
-			}
 
-		}
-		toMaps(view);
-	}
 
 	/**
 	 * Start.

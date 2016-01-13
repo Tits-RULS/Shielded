@@ -22,4 +22,17 @@ public interface IF_pm_menu {
     public void toThemeModelo();
 
     public void toMapsModelo();
+
+    public int getState();
+
+    public int getIA();
+
+    public int getIALevel();
+
+    public void setIALevel(int IALevel);
+
+    public int getTheme();
+
+    public void setTheme(int theme);
+
 }

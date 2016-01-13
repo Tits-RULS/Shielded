@@ -5,15 +5,18 @@
     android:layout_height="match_parent"
     android:background="@drawable/yelmo">
 
+    <!-- Info del jugador activo -->
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:columnCount="2"
         android:rowCount="1">
+        <!-- Nombre de usuario -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/user_name"/>
+        <!-- Foto de perfil -->
         <ImageView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/user_pic" />

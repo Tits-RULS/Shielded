@@ -12,6 +12,9 @@
     <string name="match_medium">Medio</string>
     <string name="match_hard">Dificil</string>
 
+    <!-- Strings para el menu Seleccion de tamaño -->
+    <string name="dimension_title">SELECCIONA TABLERO</string>
+
 
     <!-- Otros -->
     <string name="menu_1vs1">1vs1</string>

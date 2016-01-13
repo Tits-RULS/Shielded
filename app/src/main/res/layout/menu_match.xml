@@ -30,21 +30,24 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
+        android:id="@+id/bt_easy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/match_easy"
-        android:onClick="toThemeIA" />
+        android:onClick="selectIA" />
 
     <Button
+        android:id="@+id/bt_medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/match_medium"
-        android:onClick="toThemeIA" />
+        android:onClick="selectIA" />
 
     <Button
+        android:id="@+id/bt_hard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/match_hard"
-        android:onClick="toThemeIA" />
+        android:onClick="selectIA" />
 
 </LinearLayout>

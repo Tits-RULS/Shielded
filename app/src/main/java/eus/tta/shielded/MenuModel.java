@@ -17,6 +17,8 @@ public class MenuModel implements IF_pm_menu{
     private final int SETTINGS = 7;
     private int IA=0; //IA activa (1) o no (0)
     private short state = COVER; //Estado en el que se encuentra la aplicacion
+    private int IALevel;
+    private int themeID;
 
     public MenuModel(IF_mp_menu presentador){
         this.presentador=presentador;
@@ -26,47 +28,75 @@ public class MenuModel implements IF_pm_menu{
     public void toCoverModelo(){
         state=COVER;
         IA=0;
-        presentador.toPresenterModelo(state,IA);
+        presentador.toPresenterModelo();
     }
     @Override
     public void toMenuModelo() {
         state=MENU;
         IA=0;
-        presentador.toPresenterModelo(state, IA);
+        presentador.toPresenterModelo();
     }
     @Override
     public void toCampanaModelo(){
         state=HISTORY;
         IA=0;
-        presentador.toPresenterModelo(state, IA);
+        presentador.toPresenterModelo();
     }
     @Override
     public void toMatchModelo() {
         state=MATCH;
         IA=1;
-        presentador.toPresenterModelo(state, IA);
+        presentador.toPresenterModelo();
     }
     @Override
     public void toVSModelo() {
         state=MATCH;
         IA=0;
-        presentador.toPresenterModelo(state, IA);
+        presentador.toPresenterModelo();
     }
     @Override
     public void toSettingsModelo(){
         state=SETTINGS;
         IA=0;
-        presentador.toPresenterModelo(state, IA);
+        presentador.toPresenterModelo();
     }
     @Override
     public void toThemeModelo(){
         state=THEME;
-        presentador.toPresenterModelo(state, IA);
+        presentador.toPresenterModelo();
     }
 
     @Override
     public void toMapsModelo(){
         state=MAP;
-        presentador.toPresenterModelo(state,IA);
+        presentador.toPresenterModelo();
+    }
+
+    @Override
+    public int getState(){
+        return state;
+    }
+
+    @Override
+    public int getIA(){
+        return IA;
+    }
+
+    @Override
+    public int getIALevel(){
+        return themeID;
+    }
+    @Override
+    public void setIALevel(int IALevel){
+        this.IALevel = IALevel;
+    }
+
+    @Override
+    public int getTheme(){
+        return themeID;
+    }
+    @Override
+    public void setTheme(int theme){
+        this.themeID = theme;
     }
 }

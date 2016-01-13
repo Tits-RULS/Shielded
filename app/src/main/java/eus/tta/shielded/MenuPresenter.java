@@ -7,8 +7,6 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     /*-- Atributos --*/
     IF_pv_menu vista;
     IF_pm_menu modelo;
-    int state;
-    int IA;
 
     /*-- Métodos de clase --*/
     //Constructores
@@ -19,9 +17,9 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
 
     /*-- Métodos sobreescritos --*/
     @Override
-    public void toPresenterModelo(int state, int ia) {
-        this.state = state;
-        this.IA=ia;
+    public void toPresenterModelo() {
+        int state = modelo.getState();
+        int IA = modelo.getIA();
         switch(state){
             case 0:
                 System.out.println("Pasando a Cover");
@@ -77,6 +75,21 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     public void toMatchPresenterVista() {
         modelo.toMatchModelo();
     }
+
+    @Override
+    public void selectIAPresenterVista(int id) {
+        switch (id) {
+            case R.id.bt_easy:
+                modelo.setIALevel(1);
+                break;
+            case R.id.bt_medium:
+                modelo.setIALevel(2);;
+                break;
+            case R.id.bt_hard:
+                modelo.setIALevel(3);
+                break;
+        }
+    }
     @Override
     public void toVSPresenterVista(){
         modelo.toVSModelo();
@@ -92,11 +105,30 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     }
 
     @Override
+    public void selectThemePresenterVista(int id){
+        switch(id){
+            case R.id.bt_japon:
+                modelo.setTheme(1);
+                break;
+            case R.id.bt_vikingo:
+                modelo.setTheme(2);
+                break;
+            case R.id.bt_egipto:
+                modelo.setTheme(3);
+                break;
+            case R.id.bt_hyrule:
+                modelo.setTheme(4);
+                break;
+        }
+    }
+    @Override
     public void toMapsPresenterVista(){
         modelo.toMapsModelo();
     }
     @Override
     public void onBackPressedPresenterVista(){
+        int state = modelo.getState();
+        int IA = modelo.getIA();
         switch(state){
             case 0:
                 System.out.println("Volviendo a Cover");
