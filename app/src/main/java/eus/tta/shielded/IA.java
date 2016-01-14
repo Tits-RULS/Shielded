@@ -14,5 +14,5 @@ public interface IA {
 	 *
 	 * @return the int
 	 */
-	public int turn();
+	Data turn();
 }

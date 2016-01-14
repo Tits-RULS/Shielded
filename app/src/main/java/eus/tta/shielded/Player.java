@@ -28,7 +28,6 @@ public class Player {
 		turn=start;
 		selections_left=selections;
 		score=0;
-		System.out.println("JUGADOR CARGADO");
 	}
 	
 	/**

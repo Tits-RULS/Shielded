@@ -59,7 +59,7 @@ public class HardIA implements IA {
 	 * @see com.example.shielded2.IA#turn()
 	 */
 	@Override
-	public int turn(){
+	public Data turn(){
 		/*comprobar cuadrados*/
 		int act=-1;
 		for(int ix=0; ix<xTam&&act==-1;ix++){
@@ -224,7 +224,7 @@ public class HardIA implements IA {
 				
 			}
 		}
-		return act;
+		return array[act];
 	}
 
 }

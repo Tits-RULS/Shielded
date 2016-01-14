@@ -52,7 +52,7 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
         Intent intent = getIntent();
         int map = intent.getIntExtra(EXTRA_MAP,0);
         int theme = intent.getIntExtra(EXTRA_THEME,1);
-        presenter = new GamePresenter(this,map,theme,0);
+        presenter = new GamePresenter(this,map,theme,1,0);
     }
 
     @Override
@@ -244,24 +244,44 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
     @Override
     public void activeStick(int x, int y, int user,boolean vertical) {
         int id = getStickId(x,y,vertical);
-        View view = findViewById(id);
+        final View view = findViewById(id);
         if(user==1){
             /*user1*/
             if(vertical){
                 /*palo vertical*/
-                view.setBackgroundDrawable(stickv1r);
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.setBackgroundDrawable(stickv1r);
+                    }
+                });
             }else{
                 /*palo horizontal*/
-                view.setBackgroundDrawable(stickh1r);
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.setBackgroundDrawable(stickh1r);
+                    }
+                });
             }
         }else{
             /*user2*/
             if(vertical){
                 /*palo vertical*/
-                view.setBackgroundDrawable(stickv2r);
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.setBackgroundDrawable(stickv2r);
+                    }
+                });
             }else{
                 /*palo horizontal*/
-                view.setBackgroundDrawable(stickh2r);
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.setBackgroundDrawable(stickh2r);
+                    }
+                });
             }
         }
         buttonSound.start();
@@ -270,24 +290,45 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
     @Override
     public void changeStick(int x, int y, int user, boolean vertical){
         int id = getStickId(x, y, vertical);
-        View view = findViewById(id);
+        final View view = findViewById(id);
         if(user==1){
             /*user1*/
             if(vertical){
                 /*palo vertical*/
-                view.setBackgroundDrawable(stickv1);
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.setBackgroundDrawable(stickv1);
+                    }
+                });
+
             }else{
                 /*palo horizontal*/
-                view.setBackgroundDrawable(stickh1);
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.setBackgroundDrawable(stickh1);
+                    }
+                });
             }
         }else{
             /*user2*/
             if(vertical){
                 /*palo vertical*/
-                view.setBackgroundDrawable(stickv2);
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.setBackgroundDrawable(stickv2);
+                    }
+                });
             }else{
                 /*palo horizontal*/
-                view.setBackgroundDrawable(stickh2);
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.setBackgroundDrawable(stickh2);
+                    }
+                });
             }
         }
     }
@@ -295,11 +336,21 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
     @Override
     public void activeSquare(int x, int y, int user) {
         int id = getSquareId(x, y);
-        View view = findViewById(id);
+        final View view = findViewById(id);
         if(user==1){
-            view.setBackgroundDrawable(square1);
+            view.post(new Runnable() {
+                @Override
+                public void run() {
+                    view.setBackgroundDrawable(square1);
+                }
+            });
         }else {
-            view.setBackgroundDrawable(square2);
+            view.post(new Runnable() {
+                @Override
+                public void run() {
+                    view.setBackgroundDrawable(square2);
+                }
+            });
         }
         shieldSound.start();
     }
@@ -323,26 +374,41 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
 
     @Override
     public void changeTurn(int player){
-        TextView tv1 = (TextView) findViewById(R.id.txt1);
-        TextView tv2 = (TextView) findViewById(R.id.txt2);
+        final TextView tv1 = (TextView) findViewById(R.id.txt1);
+        final TextView tv2 = (TextView) findViewById(R.id.txt2);
 
         if(player == 1){
-            tv1.setTextSize(24);
-            tv2.setTextSize(14);
+            tv1.post(new Runnable() {
+                @Override
+                public void run() {
+                    tv1.setTextSize(24);
+                    tv2.setTextSize(14);
+                }
+            });
         }
         else{
-            tv1.setTextSize(14);
-            tv2.setTextSize(24);
+            tv1.post(new Runnable() {
+                @Override
+                public void run() {
+                    tv1.setTextSize(14);
+                    tv2.setTextSize(24);
+                }
+            });
         }
     }
 
     @Override
-    public void changeScore(int score1, int score2){
-        TextView tv1 = (TextView) findViewById(R.id.txt1);
-        TextView tv2 = (TextView) findViewById(R.id.txt2);
+    public void changeScore(final int score1,final int score2){
+        final TextView tv1 = (TextView) findViewById(R.id.txt1);
+        final TextView tv2 = (TextView) findViewById(R.id.txt2);
 
-        tv1.setText("Player1: "+score1);
-        tv2.setText("Player2: "+score2);
+        tv1.post(new Runnable() {
+            @Override
+            public void run() {
+                tv1.setText("Player1: " + score1);
+                tv2.setText("Player2: "+score2);
+            }
+        });
     }
 
     @Override

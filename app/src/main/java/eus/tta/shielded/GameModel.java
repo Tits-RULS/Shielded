@@ -15,8 +15,11 @@ public class GameModel implements IF_pm_game {
     static final public int TYPE_EIA = 1;
     static final public int TYPE_MIA = 2;
     static final public int TYPE_DIE = 3;
+    static final public int TYPE_NS = 4;
+    static final public int TYPE_OS = 5;
 
     private IF_mp_game presenter;
+    private int type;
 
     /*variables para la gestión del juego*/
     private Stick vertical[][];
@@ -28,42 +31,50 @@ public class GameModel implements IF_pm_game {
 
     private int squaresActivated;
 
-    private int exceptions[];
 
     /*parámetros de dimensiones*/
     private int xTam = 3;
     private int yTam = 4;
-    private  int buttons = 24;
     private int squares = 9;
 
+    private IA ia;
 
-    public GameModel(IF_mp_game presenter,int map, int type){
+
+    public GameModel(IF_mp_game presenter,int map, int type, int id){
         this.presenter = presenter;
-        Log.i("demo","map: "+map);
-        /*genereta map*/
+        this.type = type;
+        switch(type){
+            case TYPE_VS:
+                /*genereta map*/
+                loadMap(map);
+                break;
+            case TYPE_EIA:
+                /*genereta map*/
+                loadMap(map);
+                ia = new EasyIA(vertical,horizontal,xTam,yTam);
+                break;
+        }
+            }
+
+    private void loadMap(int map){
         switch (map){
             case MAP_3X3:
                 //3x3
                 xTam=3;
                 yTam=3;
-                buttons=24;
                 squares=9;
                 break;
             case MAP_4X4:
                 //4x4
                 xTam=4;
                 yTam=4;
-                buttons=40;
                 squares=16;
                 break;
             case MAP_5X4:
                 //4x5
                 xTam=5;
                 yTam=4;
-                buttons=50;
                 squares=20;
-                exceptions=new int [1];
-                exceptions[0]=48;
                 break;
         }
 
@@ -99,9 +110,37 @@ public class GameModel implements IF_pm_game {
         }
     }
 
-
     @Override
-    public void stickPressed(int x, int y, boolean vertical) {
+    public void stickPressed(final int x,final int y,final boolean vertical) {
+        switch (type){
+            case TYPE_VS:
+                processTurn(x,y,vertical);
+                break;
+            case TYPE_EIA:
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        do {
+                            if(player1.isTurn()){
+                                processTurn(x,y,vertical);
+                            }else {
+
+                                try {
+                                    Thread.sleep(500);
+                                    Data stick = ia.turn();
+                                    processTurn(stick.x, stick.y, stick.vertical);
+                                }catch (Exception e) {
+                                    Log.e("demo", e.getMessage(), e);
+                                }
+                            }
+                        }while (player2.isTurn());
+                    }
+                }).start();
+                break;
+        }
+    }
+
+    private void processTurn(int x, int y, boolean vertical){
         boolean stickAct = false;
         boolean squareAct = false;
         if(vertical){
@@ -267,7 +306,6 @@ public class GameModel implements IF_pm_game {
             }
         }
     }
-
 
     @Override
     public int [] getDimensions(){

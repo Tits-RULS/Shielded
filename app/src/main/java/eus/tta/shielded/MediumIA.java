@@ -57,7 +57,7 @@ public class MediumIA implements IA {
 	/* (non-Javadoc)
 	 * @see com.example.shielded2.IA#turn()
 	 */
-	public int turn(){
+	public Data turn(){
 		/*comprobar cuadrados*/
 		int act=-1;
 		for(int ix=0; ix<xTam&&act==-1;ix++){
@@ -130,6 +130,6 @@ public class MediumIA implements IA {
 				
 			}
 		}
-		return act;
+		return array[act];
 	}
 }

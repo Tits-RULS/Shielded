@@ -47,7 +47,7 @@ public class GameIA extends Game {
 		int dificult = extras.getInt("dificult");
 		switch(dificult){
 		case 1:
-			ia = new EasyIA(buttons,exceptions,this);
+			//ia = new EasyIA(buttons,exceptions,this);
 			break;
 		case 2:
 			ia = new MediumIA(buttons,exceptions,this);
@@ -136,16 +136,16 @@ public class GameIA extends Game {
 		else{
 			/*comprobar si le toca a IA*/
 			if(jugador2.isTurn()){
-				int vwId= ia.turn();
-				System.out.println("ID= "+vwId);
-				View vw = findViewById(vwId);
+				//int vwId= ia.turn();
+				//System.out.println("ID= "+vwId);
+				//View vw = findViewById(vwId);
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 				
-				eventIA(vw);
+			//	eventIA(vw);
 			}
 		}
     }

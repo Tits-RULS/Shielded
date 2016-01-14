@@ -12,10 +12,10 @@ public class GamePresenter implements IF_vp_game, IF_mp_game{
     private int last_user;
     private boolean last_vertical;
 
-    public GamePresenter (IF_pv_game vista, int map, int theme, int type){
+    public GamePresenter (IF_pv_game vista, int map, int theme, int type, int id){
         this.vista = vista;
         firtsStick = true;
-        model = new GameModel(this,map,type);
+        model = new GameModel(this,map,type,id);
         this.vista.loadTheme(theme);
         int dimen [] = model.getDimensions();
         this.vista.generateTable(dimen[0], dimen[1]);
