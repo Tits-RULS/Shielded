@@ -23,9 +23,11 @@ public interface IF_pm_menu {
 
     public void toMapsModelo();
 
+    public void toGameModelo();
+
     public int getState();
 
-    public int getIA();
+    public boolean getIA();
 
     public int getIALevel();
 
@@ -34,5 +36,9 @@ public interface IF_pm_menu {
     public int getTheme();
 
     public void setTheme(int theme);
+
+    public int getMap();
+
+    public void setMap(int map);
 
 }

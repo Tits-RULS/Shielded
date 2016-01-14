@@ -16,30 +16,11 @@ import android.view.WindowManager;
  */
 public class MainActivity extends Activity implements IF_pv_menu{
 	/*-- Atributos --*/
-	/*states of menu*/
-	/** The menu. */
-	private final int MENU = 0;		//
-	/** The ia. */
-	private final int IA = 1;		//select IA or not
-	/** The theme. */
-	private final int THEME = 2;	//select theme
-	/** The map. */
-	private final int MAP = 3;		//select map
-	/** The game. */
-	private final int GAME = 4;		//playing
-	/** The player. */
+	//Audio player
 	private MediaPlayer player;
-	/** The state. */
-	private short state;
-	/** The theme. */
-	private int theme;
-	/** The ia dificult. */
-	private int iaDificult;
-	/** The ia. */
-	private boolean ia=false;
-	/** The bt. */
+	//Bluetooth activo o no
 	private boolean bt=false;
-	/** The bt role. */
+	//Rol de Bluetooth
 	private short btRole;
 
 	IF_vp_menu presentador;
@@ -55,7 +36,6 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		setContentView(R.layout.cover);
 		player = MediaPlayer.create(this, R.raw.menu);
 		player.setLooping(true);
-		theme = 0;
 		presentador = new MenuPresenter(this);
 	}
 
@@ -71,9 +51,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	protected void onResume(){
 		System.out.println("Main: onResume");
 		player.start();
-		ia=false;
 		super.onResume();
-
 	}
 
 	@Override
@@ -116,8 +94,61 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	}
 
 	@Override
+	public void toGameVista(){
+		setContentView(R.layout.loading_layout);
+
+		Intent intent;
+		if(presentador.getIA()){
+			intent = new Intent(getBaseContext(), GameIA.class);
+			/*set IA*/
+			intent.putExtra("dificult", presentador.getIALevel());
+		}
+		else{
+			/*if(bt){
+				intent = new Intent(getBaseContext(),GameServer.class);
+			}
+			else{*/
+				/*Linea para llamar al juego en versión MVP (no tocar)*/
+			intent = new Intent(getBaseContext(), GameActivity.class);
+			//}
+		}
+
+		/*set map*/
+		intent.putExtra("map",presentador.getMap());
+
+		/*set theme*/
+		intent.putExtra("theme", presentador.getTheme());
+
+		startActivity(intent);
+	}
+	@Override
 	public void toExitVista(){
 		super.onBackPressed();
+	}
+
+	@Override
+	protected void onPause(){
+		System.out.println("Main: onPause");
+		player.pause();
+		super.onPause();
+	}
+
+	@Override
+	protected void onStop(){
+		System.out.println("Main: onStop");
+		super.onStop();
+		presentador.onStopPresenterVista();
+	}
+
+	@Override
+	protected void onDestroy(){
+		player.stop();
+		super.onDestroy();
+	}
+
+	@Override
+	public void onBackPressed() {
+		presentador.onBackPressedPresenterVista();
 	}
 
 	/*-- Métodos de clase --*/
@@ -162,7 +193,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		int id = view.getId();
 		presentador.selectThemePresenterVista(id);
 
-		if(bt){
+		/*if(bt){
 			if(btRole==2){
 				//lanzar la actividad clientes
 				Intent intent;
@@ -174,7 +205,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 				return;
 			}
 
-		}
+		}*/
 		toMaps(view);
 	}
 
@@ -182,25 +213,17 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		presentador.toMapsPresenterVista();
 	}
 
-	@Override
-	public void onBackPressed() {
-		presentador.onBackPressedPresenterVista();
+	public void selectMap(View view){
+		int id = view.getId();
+		presentador.selectMapPresenterVista(id);
+		start(view);
 	}
 
+	public void start(View view){
+		presentador.toGamePresenterVista();
+	}
 
-	/**
-	 * To theme ia.
-	 *
-	 * @param view the view
-	 */
-
-
-	/**
-	 * To theme bt.
-	 *
-	 * @param view the view
-	 */
-	public void toThemeBT(View view){
+	/*public void toThemeBT(View view){
 		bt=true;
 		toTheme(view);
 		switch(view.getId()){
@@ -212,104 +235,6 @@ public class MainActivity extends Activity implements IF_pv_menu{
 			btRole=2;
 			break;
 		}
-
-
-	}
-
-
-	/**
-	 * Select theme.
-	 *
-	 * @param view the view
-	 */
-
-
-	/**
-	 * Start.
-	 *
-	 * @param view the view
-	 */
-	public void start(View view){
-		Intent intent;
-		if(ia){
-			intent = new Intent(getBaseContext(), GameIA.class);
-			intent.putExtra("dificult", iaDificult);
-		}
-		else{
-			if(bt){
-				intent = new Intent(getBaseContext(),GameServer.class);
-			}
-			else{
-				/*Linea para llamar al juego en versión MVP (no tocar)*/
-				intent = new Intent(getBaseContext(), GameActivity.class);
-			}
-		}
-		int id = view.getId();
-		state = GAME;
-		/*set map*/
-		switch(id){
-		case R.id.button3_3:
-			intent.putExtra("map", 0);
-			break;
-		case R.id.button4_4:
-			intent.putExtra("map",1);
-			break;
-		case R.id.button4_5:
-			intent.putExtra("map",2);
-			break;
-		}
-		setContentView(R.layout.loading_layout);
-		/*set theme*/
-		intent.putExtra("theme", theme);
-		startActivity(intent);
-	}
-
-	/**
-	 * On pause.
-	 */
-	@Override
-	protected void onPause(){
-		System.out.println("Main: onPause");
-		player.pause();
-		super.onPause();
-	}
-
-	/**
-	 * On stop.
-	 */
-	@Override
-	protected void onStop(){
-		System.out.println("Main: onStop");
-		super.onStop();
-		switch(state){
-		case MENU:
-			break;
-		case IA:
-			break;
-		case THEME:
-			break;
-		case MAP:
-			break;
-		case GAME:
-			setContentView(R.layout.cover);
-			state = MENU;
-			break;
-		}
-	}
-
-	/**
-	 * On destroy.
-	 */
-	@Override
-	protected void onDestroy(){
-		player.stop();
-		super.onDestroy();
-	}
-
-	/**
-	 * On back pressed.
-	 */
-
-
+	}*/
 
 }

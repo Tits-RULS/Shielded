@@ -26,5 +26,16 @@ public interface IF_vp_menu {
 
     public void toMapsPresenterVista();
 
+    public void selectMapPresenterVista(int id);
+
+    public void toGamePresenterVista();
+
     public void onBackPressedPresenterVista();
+
+    public void onStopPresenterVista();
+
+    public boolean getIA();
+    public int getIALevel();
+    public int getTheme();
+    public int getMap();
 }

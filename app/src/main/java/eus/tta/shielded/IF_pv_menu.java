@@ -28,5 +28,7 @@ public interface IF_pv_menu {
 
     public void toMapsVista();
 
+    public void toGameVista();
+
     public void toExitVista();
 }

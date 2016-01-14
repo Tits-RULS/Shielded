@@ -9,7 +9,7 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     IF_pm_menu modelo;
 
     /*-- Métodos de clase --*/
-    //Constructores
+    //Constructor
     public MenuPresenter(IF_pv_menu vista){
         this.vista=vista;
         modelo= new MenuModel(this);
@@ -18,9 +18,7 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     /*-- Métodos sobreescritos --*/
     @Override
     public void toPresenterModelo() {
-        int state = modelo.getState();
-        int IA = modelo.getIA();
-        switch(state){
+        switch(modelo.getState()){
             case 0:
                 System.out.println("Pasando a Cover");
                 vista.toCoverVista();
@@ -30,12 +28,12 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
                 vista.toMenuVista();
                 break;
             case 2:
-                if(IA==0) {
-                    System.out.println("Pasando a Versus");
-                    vista.toVSVista();
-                }else {
+                if(modelo.getIA()) {
                     System.out.println("Pasando a Partida");
                     vista.toMatchVista();
+                }else {
+                    System.out.println("Pasando a Versus");
+                    vista.toVSVista();
                 }
                 break;
             case 3:
@@ -47,6 +45,8 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
                 vista.toMapsVista();
                 break;
             case 5:
+                System.out.println("Pasando al juego");
+                vista.toGameVista();
                 break;
             case 6:
                 System.out.println("Pasando a Campaña");
@@ -125,11 +125,30 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     public void toMapsPresenterVista(){
         modelo.toMapsModelo();
     }
+
+    @Override
+    public void selectMapPresenterVista(int id){
+        switch(id){
+            case R.id.button3_3:
+                modelo.setMap(0);
+                break;
+            case R.id.button4_4:
+                modelo.setMap(1);
+                break;
+            case R.id.button4_5:
+                modelo.setMap(2);
+                break;
+        }
+    }
+
+    @Override
+    public void toGamePresenterVista(){
+        modelo.toGameModelo();
+    }
+
     @Override
     public void onBackPressedPresenterVista(){
-        int state = modelo.getState();
-        int IA = modelo.getIA();
-        switch(state){
+        switch(modelo.getState()){
             case 0:
                 System.out.println("Volviendo a Cover");
                 vista.toExitVista();
@@ -143,12 +162,12 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
                 modelo.toMenuModelo();
                 break;
             case 3:
-                if(IA==0) {
-                    System.out.println("Volviendo a Versus");
-                    modelo.toVSModelo();
-                }else {
+                if(modelo.getIA()) {
                     System.out.println("Volviendo a Partida");
                     modelo.toMatchModelo();
+                }else {
+                    System.out.println("Volviendo a Versus");
+                    modelo.toVSModelo();
                 }
                 break;
             case 4:
@@ -156,6 +175,8 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
                 modelo.toThemeModelo();
                 break;
             case 5:
+                System.out.println("Volviendo al Menu");
+                modelo.toMenuModelo();
                 break;
             case 6:
                 System.out.println("Volviendo al Menu");
@@ -166,5 +187,35 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
                 vista.toMenuVista();
                 break;
         }
+    }
+
+    @Override
+    public void onStopPresenterVista(){
+        switch(modelo.getState()){
+            case 5:
+                modelo.toCoverModelo();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public boolean getIA(){
+        return modelo.getIA();
+    }
+    @Override
+    public int getIALevel(){
+        return modelo.getIALevel();
+    }
+
+    @Override
+    public int getTheme(){
+        return modelo.getTheme();
+    }
+
+    @Override
+    public int getMap(){
+        return modelo.getMap();
     }
 }
