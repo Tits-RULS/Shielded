@@ -14,7 +14,7 @@ public class GameModel implements IF_pm_game {
     static final public int TYPE_VS = 0;
     static final public int TYPE_EIA = 1;
     static final public int TYPE_MIA = 2;
-    static final public int TYPE_DIE = 3;
+    static final public int TYPE_HIA = 3;
     static final public int TYPE_NS = 4;
     static final public int TYPE_OS = 5;
 
@@ -51,7 +51,15 @@ public class GameModel implements IF_pm_game {
             case TYPE_EIA:
                 /*genereta map*/
                 loadMap(map);
-                ia = new EasyIA(vertical,horizontal,xTam,yTam);
+                ia = new EasyIA(vertical,horizontal,square,xTam,yTam);
+                break;
+            case TYPE_MIA:
+                loadMap(map);
+                ia = new MediumIA(vertical,horizontal,square,xTam,yTam);
+                break;
+            case TYPE_HIA:
+                loadMap(map);
+                ia = new HardIA(vertical,horizontal,square,xTam,yTam);
                 break;
         }
             }
@@ -111,33 +119,42 @@ public class GameModel implements IF_pm_game {
     }
 
     @Override
-    public void stickPressed(final int x,final int y,final boolean vertical) {
+    public void stickPressed(int x, int y, boolean vertical) {
         switch (type){
             case TYPE_VS:
                 processTurn(x,y,vertical);
                 break;
             case TYPE_EIA:
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        do {
-                            if(player1.isTurn()){
-                                processTurn(x,y,vertical);
-                            }else {
-
-                                try {
-                                    Thread.sleep(500);
-                                    Data stick = ia.turn();
-                                    processTurn(stick.x, stick.y, stick.vertical);
-                                }catch (Exception e) {
-                                    Log.e("demo", e.getMessage(), e);
-                                }
-                            }
-                        }while (player2.isTurn());
-                    }
-                }).start();
+                iaProcessTurn(x,y,vertical);
+                break;
+            case  TYPE_MIA:
+                iaProcessTurn(x,y,vertical);
+                break;
+            case  TYPE_HIA:
+                iaProcessTurn(x,y,vertical);
                 break;
         }
+    }
+
+    private void iaProcessTurn(final int x,final  int y,final  boolean vertical){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                do {
+                    if(player1.isTurn()){
+                        processTurn(x,y,vertical);
+                    }else {
+                        try {
+                            Thread.sleep(500);
+                            Data stick = ia.turn();
+                            processTurn(stick.x, stick.y, stick.vertical);
+                        }catch (Exception e) {
+                            Log.e("demo", e.getMessage(), e);
+                        }
+                    }
+                }while (player2.isTurn());
+            }
+        }).start();
     }
 
     private void processTurn(int x, int y, boolean vertical){

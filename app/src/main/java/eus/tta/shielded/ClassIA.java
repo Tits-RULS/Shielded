@@ -12,13 +12,18 @@ public abstract class ClassIA implements IA {
     int buttons;
     Stick [][] vertical;
     Stick [][] horizontal;
+    Square [][] square;
     Random r;
     Data [] array;
+    int xTam,yTam;
 
-    public ClassIA(Stick [][] vertical, Stick [][] horizontal,final int maxX,final int maxY){
+    public ClassIA(Stick [][] vertical, Stick [][] horizontal,Square [][] square,final int maxX,final int maxY){
         buttons= maxY*(maxX+1)+maxX*(maxY+1);
+        xTam = maxX;
+        yTam = maxY;
         this.vertical = vertical;
         this.horizontal = horizontal;
+        this.square = square;
         r = new Random();
 		/*Llenar array de datos*/
         array = new Data [buttons];

@@ -15,8 +15,8 @@ import android.util.Log;
 public class EasyIA extends ClassIA{
 
 
-	public EasyIA(Stick [][] vertical, Stick [][] horizontal,int maxX,int maxY){
-		super(vertical,horizontal,maxX,maxY);
+	public EasyIA(Stick [][] vertical, Stick [][] horizontal,Square [][] square,int maxX,int maxY){
+		super(vertical,horizontal,square,maxX,maxY);
 	}
 	/* (non-Javadoc)
 	 * @see com.example.shielded2.IA#turn()

@@ -50,10 +50,10 @@ public class GameIA extends Game {
 			//ia = new EasyIA(buttons,exceptions,this);
 			break;
 		case 2:
-			ia = new MediumIA(buttons,exceptions,this);
+			//ia = new MediumIA(buttons,exceptions,this);
 			break;
 		case 3:
-			ia = new HardIA(buttons,exceptions,this);
+			//ia = new HardIA(buttons,exceptions,this);
 			break;
 		}
 		

@@ -52,7 +52,7 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
         Intent intent = getIntent();
         int map = intent.getIntExtra(EXTRA_MAP,0);
         int theme = intent.getIntExtra(EXTRA_THEME,1);
-        presenter = new GamePresenter(this,map,theme,1,0);
+        presenter = new GamePresenter(this,map,theme,3,0);
     }
 
     @Override
