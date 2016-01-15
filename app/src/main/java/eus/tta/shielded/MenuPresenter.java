@@ -1,5 +1,7 @@
 package eus.tta.shielded;
 
+import android.widget.TextView;
+
 /**
  * Created by kevin on 10/01/16.
  */
@@ -80,18 +82,19 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     public void selectIAPresenterVista(int id) {
         switch (id) {
             case R.id.bt_easy:
-                modelo.setIALevel(1);
+                modelo.setType(1);
                 break;
             case R.id.bt_medium:
-                modelo.setIALevel(2);;
+                modelo.setType(2);
                 break;
             case R.id.bt_hard:
-                modelo.setIALevel(3);
+                modelo.setType(3);
                 break;
         }
     }
     @Override
     public void toVSPresenterVista(){
+        modelo.setType(0);
         modelo.toVSModelo();
     }
     @Override
@@ -149,19 +152,19 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     @Override
     public void onBackPressedPresenterVista(){
         switch(modelo.getState()){
-            case 0:
-                System.out.println("Volviendo a Cover");
+            case 0://Cover
+                System.out.println("Saliendo");
                 vista.toExitVista();
                 break;
-            case 1:
-                System.out.println("Volviendo a Menu");
+            case 1://Menu
+                System.out.println("Volviendo a Cover");
                 modelo.toCoverModelo();
                 break;
-            case 2:
+            case 2://Match
                 System.out.println("Volviendo al Menu");
                 modelo.toMenuModelo();
                 break;
-            case 3:
+            case 3://Theme
                 if(modelo.getIA()) {
                     System.out.println("Volviendo a Partida");
                     modelo.toMatchModelo();
@@ -170,21 +173,21 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
                     modelo.toVSModelo();
                 }
                 break;
-            case 4:
+            case 4://Map
                 System.out.println("Volviendo a Temas");
                 modelo.toThemeModelo();
                 break;
-            case 5:
+            case 5://Game
                 System.out.println("Volviendo al Menu");
                 modelo.toMenuModelo();
                 break;
-            case 6:
+            case 6://Settings
                 System.out.println("Volviendo al Menu");
                 modelo.toMenuModelo();
                 break;
-            case 7:
+            case 7://history
                 System.out.println("Volviendo al Menu");
-                vista.toMenuVista();
+                modelo.toMenuModelo();
                 break;
         }
     }
@@ -201,13 +204,21 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     }
 
     @Override
-    public boolean getIA(){
-        return modelo.getIA();
+    public void saveUserPresenterVista(String nick, String pss){
+        modelo.setNick(nick);
+        modelo.setPassword(pss);
     }
+
     @Override
-    public int getIALevel(){
-        return modelo.getIALevel();
+    public String getNickname(){
+        return modelo.getNick();
     }
+
+    @Override
+    public boolean getIA(){return modelo.getIA();}
+
+    @Override
+    public int getType(){return modelo.getType();}
 
     @Override
     public int getTheme(){

@@ -20,6 +20,8 @@ public interface IF_vp_menu {
     //Metodo para ir a Ajustes
     public void toSettingsPresenterVista ();
 
+    public void saveUserPresenterVista(String nick, String pss);
+
     public void toThemePresenterVista();
 
     public void selectThemePresenterVista(int id);
@@ -35,7 +37,8 @@ public interface IF_vp_menu {
     public void onStopPresenterVista();
 
     public boolean getIA();
-    public int getIALevel();
+    public String getNickname();
+    public int getType();
     public int getTheme();
     public int getMap();
 }

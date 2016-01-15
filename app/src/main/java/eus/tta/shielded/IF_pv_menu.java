@@ -31,4 +31,5 @@ public interface IF_pv_menu {
     public void toGameVista();
 
     public void toExitVista();
+
 }

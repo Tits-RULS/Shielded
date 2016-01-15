@@ -5,9 +5,15 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 // TODO: Auto-generated Javadoc
@@ -62,6 +68,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	@Override
 	public void toMenuVista(){
 		setContentView(R.layout.menu);
+		updateUserVista();
 	}
 	//Metodo para ir al modo Campaña
 	@Override
@@ -71,47 +78,42 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	@Override
 	public void toMatchVista(){
 		setContentView(R.layout.menu_match);
+		updateUserVista();
 	}
 	//Metodo para ir al modo Versus
 	@Override
 	public void toVSVista(){
 		setContentView(R.layout.menu_vs);
+		updateUserVista();
 	}
 	//Metodo para ir a Ajustes
 	@Override
 	public void toSettingsVista(){
-		//Proximamente
+		setContentView(R.layout.menu_settings);
+		disableLogin();
+		updateUserVista();
 	}
 
 	@Override
 	public void toThemeVista(){
 		setContentView(R.layout.menu_theme);
+		updateUserVista();
 	}
 
 	@Override
 	public void toMapsVista(){
 		setContentView(R.layout.menu_dimension);
+		updateUserVista();
 	}
 
 	@Override
 	public void toGameVista(){
 		setContentView(R.layout.loading_layout);
 
-		Intent intent;
-		if(presentador.getIA()){
-			intent = new Intent(getBaseContext(), GameIA.class);
-			/*set IA*/
-			intent.putExtra("dificult", presentador.getIALevel());
-		}
-		else{
-			/*if(bt){
-				intent = new Intent(getBaseContext(),GameServer.class);
-			}
-			else{*/
-				/*Linea para llamar al juego en versión MVP (no tocar)*/
-			intent = new Intent(getBaseContext(), GameActivity.class);
-			//}
-		}
+		Intent intent = new Intent(getBaseContext(), GameActivity.class);
+
+		/*set type*/
+		intent.putExtra("type",presentador.getType());
 
 		/*set map*/
 		intent.putExtra("map",presentador.getMap());
@@ -125,6 +127,8 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	public void toExitVista(){
 		super.onBackPressed();
 	}
+
+
 
 	@Override
 	protected void onPause(){
@@ -180,10 +184,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		presentador.toVSPresenterVista();
 	}
 
-	//Metodo para ir a Ajustes
-	public void toSettings (View view){
-		presentador.toSettingsPresenterVista();
-	}
+
 
 	public void toTheme (View view){
 		presentador.toThemePresenterVista();
@@ -223,6 +224,46 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		presentador.toGamePresenterVista();
 	}
 
+	//Metodo para ir a Ajustes
+	public void toSettings (View view){
+		presentador.toSettingsPresenterVista();
+	}
+
+	public void login (View view){
+		EditText editLogin = (EditText) findViewById(R.id.login);
+		EditText editPasswd = (EditText) findViewById(R.id.password);
+		final String pss = editPasswd.getText().toString();
+		final String nick = editLogin.getText().toString();
+		presentador.saveUserPresenterVista(nick, pss);
+		disableLogin();
+		updateUserVista();
+	}
+
+	public void disableLogin(){
+		String nick=presentador.getNickname();
+		if(nick!=null) {
+			GridLayout gl =(GridLayout) findViewById(R.id.login_grid);
+			gl.setVisibility(View.INVISIBLE);
+			Button bt =(Button) findViewById(R.id.login_button);
+			bt.setVisibility(View.INVISIBLE);
+		}
+	}
+
+	public void updateUserVista(){
+		String nick=presentador.getNickname();
+		if(nick!=null) {
+			TextView tv = (TextView) findViewById(R.id.user_name);
+			tv.setText(nick);
+		}
+	}
+
+	public void selectPhoto(View view){
+
+	}
+
+	public void takePhoto(View view){
+
+	}
 	/*public void toThemeBT(View view){
 		bt=true;
 		toTheme(view);

@@ -25,13 +25,21 @@ public interface IF_pm_menu {
 
     public void toGameModelo();
 
+    public void setNick(String nick);
+
+    public String getNick();
+
+    public void setPassword(String pss);
+
+    public String getPassword();
+
     public int getState();
 
     public boolean getIA();
 
-    public int getIALevel();
+    public int getType();
 
-    public void setIALevel(int IALevel);
+    public void setType(int type);
 
     public int getTheme();
 
