@@ -13,21 +13,29 @@
             android:id="@+id/txt1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="left"
-            android:textColor="@color/red"
-            android:text="TextView" />
+            android:layout_gravity="start"
+            android:textColor="@color/red" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:text="   VS   "/>
         <TextView
             android:id="@+id/txt2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:textColor="@color/green"
-            android:text="TextView" />
+            android:layout_gravity="end"
+            android:textColor="@color/green" />
     </GridLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/game_rLayout">
+        </RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>

@@ -6,11 +6,13 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -158,12 +160,12 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
 
         /*add the GridLayout*/
         GridLayout gl = new GridLayout(this);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        gl.setLayoutParams(params);
+        GridLayout.LayoutParams gl_params = new GridLayout.LayoutParams();
+        gl_params.width=GridLayout.LayoutParams.WRAP_CONTENT;
+        gl_params.height=GridLayout.LayoutParams.WRAP_CONTENT;
+        gl_params.setGravity(Gravity.CENTER);
+        gl.setLayoutParams(gl_params);
         gl.setColumnCount(maxY * 2 + 1);
-        LinearLayout ll = (LinearLayout) findViewById(R.id.game_layout);
-        ll.addView(gl);
         int hx,hy,vx,vy,sx,sy;
         hx=0;
         hy=0;
@@ -173,6 +175,7 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
         sy=0;
         int i,j;
         int id;
+        ViewGroup.LayoutParams params;
         View view;
         Button button;
         /*add the button and surrounding view*/
@@ -239,6 +242,8 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
                 sy=0;
             }
         }
+        RelativeLayout rl = (RelativeLayout) findViewById(R.id.game_rLayout);
+        rl.addView(gl);
     }
 
     @Override
