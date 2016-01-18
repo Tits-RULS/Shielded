@@ -1,5 +1,7 @@
 package eus.tta.shielded;
 
+import android.content.Intent;
+
 /**
  * Created by kevin on 10/01/16.
  */
@@ -22,6 +24,8 @@ public interface IF_vp_menu {
 
     public void saveUserPresenterVista(String nick, String pss);
 
+    public void selectPhotoPresenterVista(String photoPath);
+
     public void toThemePresenterVista();
 
     public void selectThemePresenterVista(int id);
@@ -38,6 +42,7 @@ public interface IF_vp_menu {
 
     public boolean getIA();
     public String getNickname();
+    public String getPicture();
     public int getType();
     public int getTheme();
     public int getMap();

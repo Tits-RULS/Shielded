@@ -43,6 +43,7 @@ public class MenuModel implements IF_pm_menu{
     //Parametros de login
     private String nickname;
     private String password;
+    private String picPath;
 
     /*-- Métodos de clase --*/
     public MenuModel(IF_mp_menu presentador){
@@ -123,6 +124,17 @@ public class MenuModel implements IF_pm_menu{
         this.password=pss;
         System.out.println(password);
     }
+
+    @Override
+    public String getPic(){
+        return picPath;
+    }
+    @Override
+    public void setPic(String picPath){
+        this.picPath=picPath;
+        System.out.println(password);
+    }
+
     @Override
     public int getState(){
         return state;
@@ -160,38 +172,5 @@ public class MenuModel implements IF_pm_menu{
     public void setMap(int map){
         this.mapID = map;
     }
-
-
-    public void sendFile(View view){
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        //intent.setType("*/*");
-        //startActivityForResult(intent,READ_REQUEST_CODE);
-    }
-
-/* public void sendImage(View view){
-     //Se comprueba que haya cámara
-     if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA))
-         Toast.makeText(getApplicationContext(), R.string.no_camera, Toast.LENGTH_SHORT).show();
-     else{
-         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-         //Se comprueba que haya aplicación para capturar imagen
-         if(intent.resolveActivity(getPackageManager())!=null){
-             //Hay aplicación para capturar imagen
-                File dir = Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES);
-                try {
-                    File file = File.createTempFile("tta", ".jpg", dir);
-                    pictureURI = Uri.fromFile(file);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT,pictureURI);
-                    startActivityForResult(intent,PICTURE_REQUEST_CODE);
-                }catch (IOException e){
-                    Log.e("demo", e.getMessage(), e);
-                }
-            }else{
-                //No hay aplicación para capturar imagen
-                Toast.makeText(getApplicationContext(),R.string.no_app,Toast.LENGTH_SHORT).show();
-            }
-        }
-    }*/
+    
 }

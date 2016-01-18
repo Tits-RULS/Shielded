@@ -18,9 +18,10 @@
             android:id="@+id/user_name"
             android:textAppearance="?android:attr/textAppearanceLarge" />
         <!-- Foto de perfil -->
-        <ImageView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/user_pic" />
+        <ImageView android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/user_pic"
+            android:visibility="gone"/>
     </GridLayout>
 
     <Button

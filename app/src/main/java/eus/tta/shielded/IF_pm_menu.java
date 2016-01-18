@@ -33,6 +33,10 @@ public interface IF_pm_menu {
 
     public String getPassword();
 
+    public String getPic();
+
+    public void setPic(String picPath);
+
     public int getState();
 
     public boolean getIA();

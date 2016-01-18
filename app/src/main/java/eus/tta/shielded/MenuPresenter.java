@@ -1,5 +1,8 @@
 package eus.tta.shielded;
 
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.widget.TextView;
 
 /**
@@ -210,9 +213,17 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     }
 
     @Override
+    public void selectPhotoPresenterVista(String photoPath){
+        modelo.setPic(photoPath);
+    }
+
+    @Override
     public String getNickname(){
         return modelo.getNick();
     }
+
+    @Override
+    public String getPicture(){return modelo.getPic();}
 
     @Override
     public boolean getIA(){return modelo.getIA();}

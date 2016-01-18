@@ -1,10 +1,15 @@
 package eus.tta.shielded;
 
 
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -12,8 +17,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
 
 
 // TODO: Auto-generated Javadoc
@@ -28,6 +37,8 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	private boolean bt=false;
 	//Rol de Bluetooth
 	private short btRole;
+
+	private static final int SELECT_PICTURE = 1;
 
 	IF_vp_menu presentador;
 
@@ -242,27 +253,82 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	public void disableLogin(){
 		String nick=presentador.getNickname();
 		if(nick!=null) {
-			GridLayout gl =(GridLayout) findViewById(R.id.login_grid);
-			gl.setVisibility(View.INVISIBLE);
+			GridLayout gl1 =(GridLayout) findViewById(R.id.login_grid);
+			gl1.setVisibility(View.GONE);
 			Button bt =(Button) findViewById(R.id.login_button);
-			bt.setVisibility(View.INVISIBLE);
+			bt.setVisibility(View.GONE);
+			GridLayout gl2 =(GridLayout) findViewById(R.id.photo_grid);
+			gl2.setVisibility(View.VISIBLE);
 		}
+
 	}
 
 	public void updateUserVista(){
 		String nick=presentador.getNickname();
+		String pic=presentador.getPicture();
 		if(nick!=null) {
 			TextView tv = (TextView) findViewById(R.id.user_name);
 			tv.setText(nick);
+			if (pic != null) {
+				ImageView img = (ImageView) findViewById(R.id.user_pic);
+				img.setVisibility(View.VISIBLE);
+				img.setImageURI(Uri.parse(pic));
+			}
 		}
 	}
 
 	public void selectPhoto(View view){
+		Intent intent = new Intent();
+		intent.setType("image/*");
+		intent.setAction(Intent.ACTION_GET_CONTENT);
+		startActivityForResult(Intent.createChooser(intent,"Select Picture"), SELECT_PICTURE);
+	}
 
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			if (requestCode == SELECT_PICTURE) {
+				Uri selectedImageUri = data.getData();
+				String selectedImagePath = getPath(selectedImageUri);
+				System.out.println("Image Path : " + selectedImagePath);
+				presentador.selectPhotoPresenterVista(selectedImagePath);
+				updateUserVista();
+			}
+		}
+	}
+
+	public String getPath(Uri uri) {
+		String[] projection = { MediaStore.Images.Media.DATA };
+		Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+		int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+		cursor.moveToFirst();
+		return cursor.getString(column_index);
 	}
 
 	public void takePhoto(View view){
 
+		/*//Se comprueba que haya cámara
+		if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA))
+			Toast.makeText(getApplicationContext(), R.string.no_camera, Toast.LENGTH_SHORT).show();
+		else{
+			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			//Se comprueba que haya aplicación para capturar imagen
+			if(intent.resolveActivity(getPackageManager())!=null){
+				//Hay aplicación para capturar imagen
+				File dir = Environment.getExternalStoragePublicDirectory(
+						Environment.DIRECTORY_PICTURES);
+				try {
+					File file = File.createTempFile("tta", ".jpg", dir);
+					pictureURI = Uri.fromFile(file);
+					intent.putExtra(MediaStore.EXTRA_OUTPUT,pictureURI);
+					startActivityForResult(intent,PICTURE_REQUEST_CODE);
+				}catch (IOException e){
+					Log.e("demo", e.getMessage(), e);
+				}
+			}else{
+				//No hay aplicación para capturar imagen
+				Toast.makeText(getApplicationContext(),R.string.no_app,Toast.LENGTH_SHORT).show();
+			}
+		}*/
 	}
 	/*public void toThemeBT(View view){
 		bt=true;

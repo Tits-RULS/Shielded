@@ -54,18 +54,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-    <ImageView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/user_pic" />
+    <ImageView android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/user_pic"
+        android:visibility="gone"/>
 
     <GridLayout
+        android:id="@+id/photo_grid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:columnCount="2"
-        android:rowCount="1">
+        android:rowCount="1"
+        android:visibility="gone">
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
