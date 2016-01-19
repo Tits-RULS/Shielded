@@ -3,6 +3,7 @@ package eus.tta.shielded;
 
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	private short btRole;
 
 	private static final int SELECT_PICTURE = 1;
+	private static final int PICTURE_REQUEST_CODE=2;
 
 	IF_vp_menu presentador;
 
@@ -284,11 +286,51 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		startActivityForResult(Intent.createChooser(intent,"Select Picture"), SELECT_PICTURE);
 	}
 
+	public void takePhoto(View view){
+
+		Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+		Toast.makeText(getApplicationContext(),R.string.horizontal_cam,Toast.LENGTH_SHORT).show();
+		startActivityForResult(intent, PICTURE_REQUEST_CODE);
+		/*//Se comprueba que haya cámara
+		if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA))
+			Toast.makeText(getApplicationContext(), R.string.no_camera, Toast.LENGTH_SHORT).show();
+		else{
+			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			//Se comprueba que haya aplicación para capturar imagen
+			if(intent.resolveActivity(getPackageManager())!=null){
+				//Hay aplicación para capturar imagen
+				File dir = Environment.getExternalStoragePublicDirectory(
+						Environment.DIRECTORY_PICTURES);
+				try {
+					File file = File.createTempFile("tta", ".jpg", dir);
+					Uri pictureURI = Uri.fromFile(file);
+					String selectedImagePath = getPath(pictureURI);
+					//System.out.println("URI: " + pictureURI);
+
+					intent.putExtra(MediaStore.EXTRA_OUTPUT,pictureURI);
+					startActivityForResult(intent,PICTURE_REQUEST_CODE);
+				}catch (IOException e){
+					Log.e("demo", e.getMessage(), e);
+				}
+			}else{
+				//No hay aplicación para capturar imagen
+				Toast.makeText(getApplicationContext(),R.string.no_app,Toast.LENGTH_SHORT).show();
+			}
+		}*/
+	}
+
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			if (requestCode == SELECT_PICTURE) {
 				Uri selectedImageUri = data.getData();
 				String selectedImagePath = getPath(selectedImageUri);
+				System.out.println("Image Path : " + selectedImagePath);
+				presentador.selectPhotoPresenterVista(selectedImagePath);
+				updateUserVista();
+			}
+			if (requestCode == PICTURE_REQUEST_CODE){
+				Uri takenImageUri = data.getData();
+				String selectedImagePath = getPath(takenImageUri);
 				System.out.println("Image Path : " + selectedImagePath);
 				presentador.selectPhotoPresenterVista(selectedImagePath);
 				updateUserVista();
@@ -304,32 +346,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		return cursor.getString(column_index);
 	}
 
-	public void takePhoto(View view){
 
-		/*//Se comprueba que haya cámara
-		if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA))
-			Toast.makeText(getApplicationContext(), R.string.no_camera, Toast.LENGTH_SHORT).show();
-		else{
-			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-			//Se comprueba que haya aplicación para capturar imagen
-			if(intent.resolveActivity(getPackageManager())!=null){
-				//Hay aplicación para capturar imagen
-				File dir = Environment.getExternalStoragePublicDirectory(
-						Environment.DIRECTORY_PICTURES);
-				try {
-					File file = File.createTempFile("tta", ".jpg", dir);
-					pictureURI = Uri.fromFile(file);
-					intent.putExtra(MediaStore.EXTRA_OUTPUT,pictureURI);
-					startActivityForResult(intent,PICTURE_REQUEST_CODE);
-				}catch (IOException e){
-					Log.e("demo", e.getMessage(), e);
-				}
-			}else{
-				//No hay aplicación para capturar imagen
-				Toast.makeText(getApplicationContext(),R.string.no_app,Toast.LENGTH_SHORT).show();
-			}
-		}*/
-	}
 	/*public void toThemeBT(View view){
 		bt=true;
 		toTheme(view);

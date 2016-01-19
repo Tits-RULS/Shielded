@@ -172,5 +172,5 @@ public class MenuModel implements IF_pm_menu{
     public void setMap(int map){
         this.mapID = map;
     }
-    
+
 }
