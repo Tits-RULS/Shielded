@@ -52,9 +52,11 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
         super.onCreate(savedInstancesState);
         setContentView(R.layout.game);
         Intent intent = getIntent();
-        int map = intent.getIntExtra(EXTRA_MAP,0);
-        int theme = intent.getIntExtra(EXTRA_THEME,1);
-        presenter = new GamePresenter(this,map,theme,3,0);
+        int map = intent.getIntExtra(ViewConstant.EXTRA_MAP, 0);
+        int theme = intent.getIntExtra(ViewConstant.EXTRA_THEME,1);
+        int type = intent.getIntExtra(ViewConstant.EXTRA_TYPE,0);
+        int id = intent.getIntExtra(ViewConstant.EXTRA_ID,0);
+        presenter = new GamePresenter(this,map,theme,type,id);
     }
 
     @Override

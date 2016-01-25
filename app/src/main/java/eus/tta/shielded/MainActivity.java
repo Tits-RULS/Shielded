@@ -126,13 +126,16 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		Intent intent = new Intent(getBaseContext(), GameActivity.class);
 
 		/*set type*/
-		intent.putExtra("type",presentador.getType());
+		intent.putExtra(ViewConstant.EXTRA_TYPE, presentador.getType());
 
 		/*set map*/
-		intent.putExtra("map",presentador.getMap());
+		intent.putExtra(ViewConstant.EXTRA_MAP, presentador.getMap());
 
 		/*set theme*/
-		intent.putExtra("theme", presentador.getTheme());
+		intent.putExtra(ViewConstant.EXTRA_THEME, presentador.getTheme());
+
+		/*set id*/
+		intent.putExtra(ViewConstant.EXTRA_ID,0);
 
 		startActivity(intent);
 	}
