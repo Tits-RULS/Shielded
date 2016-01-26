@@ -45,21 +45,32 @@ public class GameModel implements IF_pm_game {
         this.type = type;
         switch(type){
             case TYPE_VS:
-                /*genereta map*/
+                /*generate map*/
                 loadMap(map);
                 break;
             case TYPE_EIA:
-                /*genereta map*/
+                /*generate map*/
                 loadMap(map);
+                /*load IA*/
                 ia = new EasyIA(vertical,horizontal,square,xTam,yTam);
                 break;
             case TYPE_MIA:
+                /*generate map*/
                 loadMap(map);
+                /*load IA*/
                 ia = new MediumIA(vertical,horizontal,square,xTam,yTam);
                 break;
             case TYPE_HIA:
+                /*generate map*/
                 loadMap(map);
+                /*load IA*/
                 ia = new HardIA(vertical,horizontal,square,xTam,yTam);
+                break;
+            case TYPE_NS:
+                loadMap(MAP_3X3);
+                break;
+            case TYPE_OS:
+                loadMap(MAP_3X3);
                 break;
         }
             }

@@ -8,4 +8,6 @@ public class ViewConstant {
     final static public String EXTRA_THEME = "eus.tta.shielded.theme";
     final static public String EXTRA_TYPE = "eus.tta.shielded.type";
     final static public String EXTRA_ID = "eus.tta.shielded.id";
+    final static public String EXTRA_USER = "eus.tta.shielded.user";
+    final static public String EXTRA_PASSWORD = "eus.tta.shielded.password";
 }
