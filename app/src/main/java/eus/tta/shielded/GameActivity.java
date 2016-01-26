@@ -162,6 +162,7 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
 
         /*add the GridLayout*/
         GridLayout gl = new GridLayout(this);
+        gl.setId(R.id.game_gridLayout);
         GridLayout.LayoutParams gl_params = new GridLayout.LayoutParams();
         gl_params.width=GridLayout.LayoutParams.WRAP_CONTENT;
         gl_params.height=GridLayout.LayoutParams.WRAP_CONTENT;
@@ -421,6 +422,34 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
     @Override
     public void finish(int score1, int score2){
         finish();
+    }
+
+    @Override
+    public void disable(){
+        final GridLayout gl = (GridLayout) findViewById(R.id.game_gridLayout);
+        gl.post(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=0;i<gl.getChildCount();i++){
+                    View child = gl.getChildAt(i);
+                    child.setEnabled(false);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void enable(){
+        final GridLayout gl = (GridLayout) findViewById(R.id.game_gridLayout);
+        gl.post(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=0;i<gl.getChildCount();i++){
+                    View child = gl.getChildAt(i);
+                    child.setEnabled(true);
+                }
+            }
+        });
     }
 
     private int getStickId(int x, int y, boolean vertical){

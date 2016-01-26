@@ -21,4 +21,8 @@ public interface IF_pv_game {
 
     void finish(int score1, int score2);
 
+    void disable();
+
+    void enable();
+
 }

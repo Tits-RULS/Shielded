@@ -12,4 +12,10 @@ public interface IF_mp_game {
     void finish(int score1, int score2);
 
     void changeTurn();
+
+    void disable();
+
+    void enable();
+
+    void loadMap(int maxX, int maxY);
 }

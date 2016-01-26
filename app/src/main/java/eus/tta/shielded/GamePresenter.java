@@ -15,13 +15,16 @@ public class GamePresenter implements IF_vp_game, IF_mp_game{
     public GamePresenter (IF_pv_game vista, int map, int theme, int type, int id){
         this.vista = vista;
         firtsStick = true;
-        model = new GameModel(this,map,type,id);
         this.vista.loadTheme(theme);
-        int dimen [] = model.getDimensions();
-        this.vista.generateTable(dimen[0], dimen[1]);
+        model = new GameModel(this,map,5,7,"prueba2","prueba2");
         this.vista.changeTurn(model.getTurn());
         int scores [] = model.getScores();
         this.vista.changeScore(scores[0],scores[1]);
+    }
+
+    @Override
+    public void loadMap(int maxX, int maxY){
+        this.vista.generateTable(maxX, maxY);
     }
 
     @Override
@@ -66,5 +69,15 @@ public class GamePresenter implements IF_vp_game, IF_mp_game{
     @Override
     public void changeTurn(){
         this.vista.changeTurn(model.getTurn());
+    }
+
+    @Override
+    public void disable(){
+        vista.disable();
+    }
+
+    @Override
+    public void enable(){
+        vista.enable();
     }
 }

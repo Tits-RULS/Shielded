@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item name="game_gridLayout" type="id"/>
     <!-- Botones verticales -->
     <item name="game_stickV_0_0" type="id"/>
     <item name="game_stickV_0_1" type="id"/>
