@@ -3,6 +3,7 @@ package eus.tta.shielded;
 import android.database.Cursor;
 import android.graphics.AvoidXfermode;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,11 +16,13 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     IF_pv_menu vista;
     IF_pm_menu modelo;
 
+
     /*-- Métodos de clase --*/
     //Constructor
     public MenuPresenter(IF_pv_menu vista){
         this.vista=vista;
         modelo= new MenuModel(this);
+
     }
 
     /*-- Métodos sobreescritos --*/
@@ -210,36 +213,41 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
 
     @Override
     public void saveUserPresenterVista(String nick, String pss){
-        if(nick.isEmpty() || pss.isEmpty()){
-            vista.notificacionesVista("void");
-        }
-        else {
+
             modelo.loadUser(nick, pss);
             modelo.setNick(nick);
-            //modelo.setPassword(pss);
-
-        }
+            modelo.setPassword(pss);
     }
 
     @Override
-    public void showUserPresenterModelo(){
+    public void showUserPresenterVista(){
         System.out.println("Resultado: " + modelo.getResultado());
         switch (modelo.getResultado()){
+            case -2:
+                vista.notificacionesVista("void");
+                modelo.setResultado(99);
+                break;
             case -1:
                 vista.notificacionesVista("wrong");
+                modelo.setResultado(99);
                 break;
             case 0:
                 vista.notificacionesVista("new");
                 vista.disableLoginVista();
                 vista.updateUserVista();
+                modelo.setResultado(99);
                 break;
             case 1:
                 vista.notificacionesVista("loged");
                 System.out.println("Si ya existe...");
                 vista.disableLoginVista();
                 vista.updateUserVista();
+                modelo.setResultado(99);
+                break;
+            case 99:
                 break;
         }
+
     }
 
     @Override

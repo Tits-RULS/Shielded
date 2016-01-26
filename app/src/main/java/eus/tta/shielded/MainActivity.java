@@ -1,11 +1,15 @@
 package eus.tta.shielded;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -24,6 +28,9 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 // TODO: Auto-generated Javadoc
@@ -43,6 +50,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	private static final int PICTURE_REQUEST_CODE=2;
 
 	IF_vp_menu presentador;
+	SharedPreferences prefs;
 
 	/*-- Metodos sobreescritos --*/
 	//Metodo al arrancar la actividad (cuando el jugador arranque juego)
@@ -56,6 +64,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		player = MediaPlayer.create(this, R.raw.menu);
 		player.setLooping(true);
 		presentador = new MenuPresenter(this);
+		//prefs = this.getPreferences("eus.tta.shielded", MODE_PRIVATE);
 	}
 
 	//Método OnStart
@@ -262,16 +271,24 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	}
 
 	public void login (View view){
-		EditText editLogin = (EditText) findViewById(R.id.login);
-		EditText editPasswd = (EditText) findViewById(R.id.password);
-		final String pss = editPasswd.getText().toString();
-		final String nick = editLogin.getText().toString();
-		presentador.saveUserPresenterVista(nick, pss);
+		TareaAsincrona clase = new TareaAsincrona() {
+		};
+		clase.execute();
+	}
+
+	//@Override
+	private void saveLoginVista(){
+		SharedPreferences.Editor editor = prefs.edit();
+		//editor.putString(PREF_NICK, presentador.getNickname());
+		//editor.putString(PREF_PASS)
+		//editor.putString(PREF_PIC, presentador.getPicture());
+		editor.commit();
 	}
 
 	@Override
 	public void disableLoginVista(){
 		String nick=presentador.getNickname();
+		//String nick = prefs.getString(PREF_NICK,null);
 		if(nick!=null) {
 			GridLayout gl1 =(GridLayout) findViewById(R.id.login_grid);
 			gl1.setVisibility(View.GONE);
@@ -286,16 +303,59 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	@Override
 	public void updateUserVista(){
 		String nick=presentador.getNickname();
-		String pic=presentador.getPicture();
+
+		//String nick=prefs.getString(PREF_NICK, null);
+		//String pic = prefs.getString(PREF_PIC,null);
 		if(nick!=null) {
 			TextView tv = (TextView) findViewById(R.id.user_name);
 			tv.setText(nick);
-			if (pic != null) {
+			String pic=presentador.getPicture();
+			if(pic.startsWith("http")){
+				getBitmapFromURL getBitmap = new getBitmapFromURL() {
+				};
+				getBitmap.execute();
+			}
+			else{
 				ImageView img = (ImageView) findViewById(R.id.user_pic);
 				img.setVisibility(View.VISIBLE);
 				img.setImageURI(Uri.parse(pic));
 			}
+
 		}
+	}
+
+	private abstract class getBitmapFromURL extends AsyncTask<Void, Integer, Boolean> {
+			Bitmap bitmap;
+			String pic;
+			ImageView img;
+
+			@Override
+			protected void onPreExecute(){
+				this.pic=presentador.getPicture();
+				this.img = (ImageView) findViewById(R.id.user_pic);
+				img.setVisibility(View.VISIBLE);
+			}
+			@Override
+			protected Boolean doInBackground(Void... params) {
+				try{
+				URL url = new URL(pic);
+				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+				connection.setDoInput(true);
+				connection.connect();
+				InputStream input = connection.getInputStream();
+				this.bitmap = BitmapFactory.decodeStream(input);
+
+				}catch(IOException e){
+
+				}
+				return true;
+			}
+
+			@Override
+			protected void onPostExecute(Boolean result) {
+				img.setImageBitmap(bitmap);
+			}
+
 	}
 
 	public void selectPhoto(View view){
@@ -338,7 +398,33 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		return cursor.getString(column_index);
 	}
 
+	private abstract class TareaAsincrona extends AsyncTask<Void, Integer, Boolean> {
+		String pss;
+		String nick;
+		@Override
+		protected void onPreExecute(){
+			System.out.println("En el pre");
+			EditText editLogin = (EditText) findViewById(R.id.login);
+			EditText editPasswd = (EditText) findViewById(R.id.password);
+			this.pss = editPasswd.getText().toString();
+			this.nick = editLogin.getText().toString();
+		}
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			System.out.println("Durante");
+			presentador.saveUserPresenterVista(nick, pss);
+			//modelo.setPassword(pss);
 
+			return true;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			System.out.println("En el post");
+			presentador.showUserPresenterVista();
+		}
+
+	}
 	/*public void toThemeBT(View view){
 		bt=true;
 		toTheme(view);

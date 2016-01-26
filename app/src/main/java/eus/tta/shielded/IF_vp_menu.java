@@ -24,6 +24,8 @@ public interface IF_vp_menu {
 
     public void saveUserPresenterVista(String nick, String pss);
 
+    public void showUserPresenterVista();
+
     public void selectPhotoPresenterVista(String photoPath);
 
     public void toThemePresenterVista();

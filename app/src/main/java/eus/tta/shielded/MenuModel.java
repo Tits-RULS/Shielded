@@ -1,6 +1,7 @@
 package eus.tta.shielded;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
@@ -22,6 +23,7 @@ public class MenuModel implements IF_pm_menu{
     /*-- Atributos --*/
     IF_mp_menu presentador;
     HttpClient httpClient;
+
     //Parámetros de decisión
     private boolean IA; //IA activa (1) o no (0)
     private short state = COVER; //Estado en el que se encuentra la aplicacion
@@ -114,37 +116,32 @@ public class MenuModel implements IF_pm_menu{
     }
 
     @Override
-    public void loadUser(String nick, String pss) {
-        final String nickname = nick;
-        final String password = pss;
-        //int resultado = 0;
-        new Thread(new Runnable() {
-            //Sobreescribimos el método run() de Thread
-            @Override
-            public void run() {
-                try {
-                    JSONObject profile = httpClient.getJson(String.format("login.php?user=%s&password=%s", nickname, password));
-                    System.out.println("Perfil: " + profile);
-                    setResultado(profile.getInt("result"));
-                    String foto = profile.getString("foto");
-                    if(foto.equalsIgnoreCase(null)){
-                        System.out.println("foto null");
-                        setPic(foto);
-                    }
-                    else{
-                        //Si el usuario no tiene foto de perfil, imagen por defecto
-                        Uri path = Uri.parse("android.resource://eus.tta.shielded/" + R.drawable.egipcioazul);
-                        setPic(path.toString());
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+    public void loadUser(final String nick,final String pss) {
+        if (nick.isEmpty() || pss.isEmpty()) {
+            setResultado(-2);
+        } else {
+            try {
+                JSONObject profile = httpClient.getJson(String.format("login.php?user=%s&password=%s", nick, pss));
+                System.out.println("Perfil: " + profile);
+                setResultado(profile.getInt("result"));
+                String foto = profile.getString("foto");
+                //String foto = "http://51.254.221.215/uploads/prueba";
+                System.out.println("Foto: " + foto);
+                if (foto.equals("null")){
+                    //Si el usuario no tiene foto de perfil, imagen por defecto
+                    System.out.println("La foto es null");
+                    //Uri path = Uri.parse("android.resource://eus.tta.shielded/" + R.drawable.egipcioazul);
+                    setPic("http://51.254.221.215/uploads/yunque.png");
+                } else {
+                    System.out.println("cargando foto...");
+                    setPic(foto);
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-
-        }).start();
+        }
     }
 
     @Override
