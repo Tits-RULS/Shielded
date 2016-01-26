@@ -1,9 +1,11 @@
 package eus.tta.shielded;
 
 import android.database.Cursor;
+import android.graphics.AvoidXfermode;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by kevin on 10/01/16.
@@ -24,15 +26,15 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     @Override
     public void toPresenterModelo() {
         switch(modelo.getState()){
-            case 0:
+            case IF_pm_menu.COVER:
                 System.out.println("Pasando a Cover");
                 vista.toCoverVista();
                 break;
-            case 1:
+            case IF_pm_menu.MENU:
                 System.out.println("Pasando a Menu");
                 vista.toMenuVista();
                 break;
-            case 2:
+            case IF_pm_menu.MATCH:
                 if(modelo.getIA()) {
                     System.out.println("Pasando a Partida");
                     vista.toMatchVista();
@@ -41,23 +43,23 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
                     vista.toVSVista();
                 }
                 break;
-            case 3:
+            case IF_pm_menu.THEME:
                 System.out.println("Pasando a Temas");
                 vista.toThemeVista();
                 break;
-            case 4:
+            case IF_pm_menu.MAP:
                 System.out.println("Pasando a Mapas");
                 vista.toMapsVista();
                 break;
-            case 5:
+            case IF_pm_menu.GAME:
                 System.out.println("Pasando al juego");
                 vista.toGameVista();
                 break;
-            case 6:
+            case IF_pm_menu.HISTORY:
                 System.out.println("Pasando a Campaña");
                 vista.toCampanaVista();
                 break;
-            case 7:
+            case IF_pm_menu.SETTINGS:
                 System.out.println("Pasando a Ajustes");
                 vista.toSettingsVista();
                 break;
@@ -85,19 +87,19 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     public void selectIAPresenterVista(int id) {
         switch (id) {
             case R.id.bt_easy:
-                modelo.setType(1);
+                modelo.setType(ModelConstant.TYPE_EIA);
                 break;
             case R.id.bt_medium:
-                modelo.setType(2);
+                modelo.setType(ModelConstant.TYPE_MIA);
                 break;
             case R.id.bt_hard:
-                modelo.setType(3);
+                modelo.setType(ModelConstant.TYPE_HIA);
                 break;
         }
     }
     @Override
     public void toVSPresenterVista(){
-        modelo.setType(0);
+        modelo.setType(ModelConstant.TYPE_VS);
         modelo.toVSModelo();
     }
     @Override
@@ -114,16 +116,16 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     public void selectThemePresenterVista(int id){
         switch(id){
             case R.id.bt_japon:
-                modelo.setTheme(1);
+                modelo.setTheme(ModelConstant.THEME_JAPAN);
                 break;
             case R.id.bt_vikingo:
-                modelo.setTheme(2);
+                modelo.setTheme(ModelConstant.THEME_VIKING);
                 break;
             case R.id.bt_egipto:
-                modelo.setTheme(3);
+                modelo.setTheme(ModelConstant.THEME_EGIPT);
                 break;
             case R.id.bt_hyrule:
-                modelo.setTheme(4);
+                modelo.setTheme(ModelConstant.THEME_HYRULE);
                 break;
         }
     }
@@ -136,13 +138,13 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     public void selectMapPresenterVista(int id){
         switch(id){
             case R.id.button3_3:
-                modelo.setMap(0);
+                modelo.setMap(ModelConstant.MAP_3X3);
                 break;
             case R.id.button4_4:
-                modelo.setMap(1);
+                modelo.setMap(ModelConstant.MAP_4X4);
                 break;
             case R.id.button4_5:
-                modelo.setMap(2);
+                modelo.setMap(ModelConstant.MAP_5X4);
                 break;
         }
     }
@@ -155,19 +157,19 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     @Override
     public void onBackPressedPresenterVista(){
         switch(modelo.getState()){
-            case 0://Cover
+            case IF_pm_menu.COVER://Cover
                 System.out.println("Saliendo");
                 vista.toExitVista();
                 break;
-            case 1://Menu
+            case IF_pm_menu.MENU://Menu
                 System.out.println("Volviendo a Cover");
                 modelo.toCoverModelo();
                 break;
-            case 2://Match
+            case IF_pm_menu.MATCH://Match
                 System.out.println("Volviendo al Menu");
                 modelo.toMenuModelo();
                 break;
-            case 3://Theme
+            case IF_pm_menu.THEME://Theme
                 if(modelo.getIA()) {
                     System.out.println("Volviendo a Partida");
                     modelo.toMatchModelo();
@@ -176,19 +178,19 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
                     modelo.toVSModelo();
                 }
                 break;
-            case 4://Map
+            case IF_pm_menu.MAP://Map
                 System.out.println("Volviendo a Temas");
                 modelo.toThemeModelo();
                 break;
-            case 5://Game
+            case IF_pm_menu.GAME://Game
                 System.out.println("Volviendo al Menu");
                 modelo.toMenuModelo();
                 break;
-            case 6://Settings
+            case IF_pm_menu.SETTINGS://Settings
                 System.out.println("Volviendo al Menu");
                 modelo.toMenuModelo();
                 break;
-            case 7://history
+            case IF_pm_menu.HISTORY://history
                 System.out.println("Volviendo al Menu");
                 modelo.toMenuModelo();
                 break;
@@ -208,8 +210,36 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
 
     @Override
     public void saveUserPresenterVista(String nick, String pss){
-        modelo.setNick(nick);
-        modelo.setPassword(pss);
+        if(nick.isEmpty() || pss.isEmpty()){
+            vista.notificacionesVista("void");
+        }
+        else {
+            modelo.loadUser(nick, pss);
+            modelo.setNick(nick);
+            //modelo.setPassword(pss);
+
+        }
+    }
+
+    @Override
+    public void showUserPresenterModelo(){
+        System.out.println("Resultado: " + modelo.getResultado());
+        switch (modelo.getResultado()){
+            case -1:
+                vista.notificacionesVista("wrong");
+                break;
+            case 0:
+                vista.notificacionesVista("new");
+                vista.disableLoginVista();
+                vista.updateUserVista();
+                break;
+            case 1:
+                vista.notificacionesVista("loged");
+                System.out.println("Si ya existe...");
+                vista.disableLoginVista();
+                vista.updateUserVista();
+                break;
+        }
     }
 
     @Override

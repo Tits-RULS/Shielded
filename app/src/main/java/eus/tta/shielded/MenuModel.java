@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -18,22 +21,7 @@ import java.io.IOException;
 public class MenuModel implements IF_pm_menu{
     /*-- Atributos --*/
     IF_mp_menu presentador;
-    //Lista de estados
-    private final int COVER = 0;
-    private final int MENU = 1;		//
-    private final int MATCH = 2;
-    private final int THEME = 3;	//select theme
-    private final int MAP = 4;		//select map
-    private final int GAME = 5;		//playing
-    private final int HISTORY = 6;
-    private final int SETTINGS = 7;
-    //Lista de tipos
-    private final int type_vs = 0; //1vs1
-    private final int type_eia = 1; //easy
-    private final int type_mia = 2; //medium
-    private final int type_hia = 3; //hard
-    private final int type_ns = 4; //new server
-    private final int type_os = 5; //old server
+    HttpClient httpClient;
     //Parámetros de decisión
     private boolean IA; //IA activa (1) o no (0)
     private short state = COVER; //Estado en el que se encuentra la aplicacion
@@ -43,11 +31,13 @@ public class MenuModel implements IF_pm_menu{
     //Parametros de login
     private String nickname;
     private String password;
+    private int resultado;
     private String picPath;
 
     /*-- Métodos de clase --*/
     public MenuModel(IF_mp_menu presentador){
         this.presentador=presentador;
+        httpClient = new HttpClient("http://51.254.221.215");
     }
 
     /*-- Métodos sobreescritos --*/
@@ -112,7 +102,6 @@ public class MenuModel implements IF_pm_menu{
     @Override
     public void setNick(String nick){
         this.nickname=nick;
-        System.out.println(nickname);
     }
 
     @Override
@@ -122,7 +111,55 @@ public class MenuModel implements IF_pm_menu{
     @Override
     public void setPassword(String pss){
         this.password=pss;
-        System.out.println(password);
+    }
+
+    @Override
+    public void loadUser(String nick, String pss) {
+        final String nickname = nick;
+        final String password = pss;
+        //int resultado = 0;
+        new Thread(new Runnable() {
+            //Sobreescribimos el método run() de Thread
+            @Override
+            public void run() {
+                try {
+                    JSONObject profile = httpClient.getJson(String.format("login.php?user=%s&password=%s", nickname, password));
+                    System.out.println("Perfil: " + profile);
+                    setResultado(profile.getInt("result"));
+                    String foto = profile.getString("foto");
+                    if(foto.equalsIgnoreCase(null)){
+                        System.out.println("foto null");
+                        setPic(foto);
+                    }
+                    else{
+                        //Si el usuario no tiene foto de perfil, imagen por defecto
+                        Uri path = Uri.parse("android.resource://eus.tta.shielded/" + R.drawable.egipcioazul);
+                        setPic(path.toString());
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }).start();
+    }
+
+    @Override
+    public int getResultado(){
+        return resultado;
+    }
+    @Override
+    public void setResultado(int resultado){
+        System.out.println("ResultadoModelo: " + resultado);
+        this.resultado=resultado;
+    }
+
+    public void pruebaServer() throws IOException, JSONException {
+        JSONObject json = httpClient.getJson(String.format("getmatches.php?user=prueba&password=prueba"));
+        System.out.println("Contenido: " + json);
     }
 
     @Override
@@ -132,7 +169,6 @@ public class MenuModel implements IF_pm_menu{
     @Override
     public void setPic(String picPath){
         this.picPath=picPath;
-        System.out.println(password);
     }
 
     @Override

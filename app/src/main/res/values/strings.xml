@@ -24,7 +24,13 @@
     <string name="select_photo">Abrir galeria</string>
     <string name="take_photo">Nueva foto</string>
     <string name="no_camera">No hay camara</string>
+
+    <!-- Strings de notificaciones -->
     <string name="horizontal_cam">Saque la foto en apaisado (Horizontal)</string>
+    <string name="void_user">Por favor, rellene los campos</string>
+    <string name="wrong_user">Usuario o contraseña incorrectos</string>
+    <string name="new_user">Usuario nuevo registrado</string>
+    <string name="loged_user">¡Bienvenido de nuevo!</string>
 
 
     <!-- Otros -->

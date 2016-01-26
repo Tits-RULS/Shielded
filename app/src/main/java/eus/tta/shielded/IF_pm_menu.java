@@ -6,6 +6,15 @@ package eus.tta.shielded;
 
 //Interfaz que comunica al presentador con el modelo
 public interface IF_pm_menu {
+    //Lista de estados
+    int COVER = 0;
+    int MENU = 1;		//
+    int MATCH = 2;
+    int THEME = 3;	//select theme
+    int MAP = 4;		//select map
+    int GAME = 5;		//playing
+    int HISTORY = 6;
+    int SETTINGS = 7;
 
     public void toCoverModelo();
 
@@ -32,6 +41,12 @@ public interface IF_pm_menu {
     public void setPassword(String pss);
 
     public String getPassword();
+
+    public void setResultado(int resultado);
+
+    public int getResultado();
+
+    public void loadUser(String nick, String pss);
 
     public String getPic();
 

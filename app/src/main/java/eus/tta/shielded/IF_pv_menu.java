@@ -24,6 +24,12 @@ public interface IF_pv_menu {
     //Metodo para ir a Ajustes
     public void toSettingsVista ();
 
+    public void disableLoginVista();
+
+    public void updateUserVista();
+
+    public void notificacionesVista(String toast);
+
     public void toThemeVista();
 
     public void toMapsVista();

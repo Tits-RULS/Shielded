@@ -103,7 +103,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	@Override
 	public void toSettingsVista(){
 		setContentView(R.layout.menu_settings);
-		disableLogin();
+		disableLoginVista();
 		updateUserVista();
 	}
 
@@ -134,9 +134,6 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		/*set theme*/
 		intent.putExtra(ViewConstant.EXTRA_THEME, presentador.getTheme());
 
-		/*set id*/
-		intent.putExtra(ViewConstant.EXTRA_ID,0);
-
 		startActivity(intent);
 	}
 	@Override
@@ -144,7 +141,26 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		super.onBackPressed();
 	}
 
-
+	@Override
+	public void notificacionesVista(String toast){
+		switch(toast){
+			case "foto":
+				Toast.makeText(getApplicationContext(),R.string.horizontal_cam,Toast.LENGTH_SHORT).show();
+				break;
+			case "void":
+				Toast.makeText(getApplicationContext(),R.string.void_user,Toast.LENGTH_SHORT).show();
+				break;
+			case "wrong":
+				Toast.makeText(getApplicationContext(),R.string.wrong_user,Toast.LENGTH_SHORT).show();
+				break;
+			case "new":
+				Toast.makeText(getApplicationContext(),R.string.new_user,Toast.LENGTH_SHORT).show();
+				break;
+			case "loged":
+				Toast.makeText(getApplicationContext(),R.string.loged_user,Toast.LENGTH_SHORT).show();
+				break;
+		}
+	}
 
 	@Override
 	protected void onPause(){
@@ -251,11 +267,10 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		final String pss = editPasswd.getText().toString();
 		final String nick = editLogin.getText().toString();
 		presentador.saveUserPresenterVista(nick, pss);
-		disableLogin();
-		updateUserVista();
 	}
 
-	public void disableLogin(){
+	@Override
+	public void disableLoginVista(){
 		String nick=presentador.getNickname();
 		if(nick!=null) {
 			GridLayout gl1 =(GridLayout) findViewById(R.id.login_grid);
@@ -268,6 +283,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 	}
 
+	@Override
 	public void updateUserVista(){
 		String nick=presentador.getNickname();
 		String pic=presentador.getPicture();
@@ -290,36 +306,9 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	}
 
 	public void takePhoto(View view){
-
 		Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-		Toast.makeText(getApplicationContext(),R.string.horizontal_cam,Toast.LENGTH_SHORT).show();
+		notificacionesVista("foto");
 		startActivityForResult(intent, PICTURE_REQUEST_CODE);
-		/*//Se comprueba que haya cámara
-		if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA))
-			Toast.makeText(getApplicationContext(), R.string.no_camera, Toast.LENGTH_SHORT).show();
-		else{
-			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-			//Se comprueba que haya aplicación para capturar imagen
-			if(intent.resolveActivity(getPackageManager())!=null){
-				//Hay aplicación para capturar imagen
-				File dir = Environment.getExternalStoragePublicDirectory(
-						Environment.DIRECTORY_PICTURES);
-				try {
-					File file = File.createTempFile("tta", ".jpg", dir);
-					Uri pictureURI = Uri.fromFile(file);
-					String selectedImagePath = getPath(pictureURI);
-					//System.out.println("URI: " + pictureURI);
-
-					intent.putExtra(MediaStore.EXTRA_OUTPUT,pictureURI);
-					startActivityForResult(intent,PICTURE_REQUEST_CODE);
-				}catch (IOException e){
-					Log.e("demo", e.getMessage(), e);
-				}
-			}else{
-				//No hay aplicación para capturar imagen
-				Toast.makeText(getApplicationContext(),R.string.no_app,Toast.LENGTH_SHORT).show();
-			}
-		}*/
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
