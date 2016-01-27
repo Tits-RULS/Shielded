@@ -1,7 +1,5 @@
 package eus.tta.shielded;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +33,9 @@ public class GameModel implements IF_pm_game {
 
     private int serverUser;
     private boolean loadingMatch;
+    final int id;
+    private String user;
+    private String password;
 
     private int squaresActivated;
 
@@ -50,6 +51,9 @@ public class GameModel implements IF_pm_game {
     public GameModel(IF_mp_game presenter,int map, int type, int id,String user, String password){
         this.presenter = presenter;
         this.type = type;
+        this.id = id;
+        this.user = user;
+        this.password = password;
         switch(type){
             case TYPE_VS:
                 /*generate map*/
@@ -77,13 +81,13 @@ public class GameModel implements IF_pm_game {
                 System.out.println("nuevo server");
                 /*new match*/
                 loadMap(MAP_3X3);
-                newMatch(user,password);
+                newMatch();
                 break;
             case TYPE_OS:
                 System.out.println("viejo server");
                 /*old match*/
                 loadMap(MAP_3X3);
-                getMatch(user,password,id);
+                getMatch();
                 break;
         }
             }
@@ -145,7 +149,7 @@ public class GameModel implements IF_pm_game {
         presenter.loadMap(xTam,yTam);
     }
 
-    private void getMatch(final String user,final String password, final int id){
+    private void getMatch(){
         final HttpClient client = new HttpClient("http://51.254.221.215");
         new Thread(new Runnable() {
             @Override
@@ -163,7 +167,7 @@ public class GameModel implements IF_pm_game {
         }).start();
     }
 
-    private void newMatch(final String user,final String password){
+    private void newMatch(){
         final HttpClient client = new HttpClient("http://51.254.221.215");
         new Thread(new Runnable() {
             @Override
@@ -225,13 +229,34 @@ public class GameModel implements IF_pm_game {
             processTurn(x,y,vertical);
         }else{
             if(player1.isTurn()&&serverUser==1){
+                /*avisar al servidor y activar*/
+                sendTurn(x,y,vertical);
                 processTurn(x,y,vertical);
             }else{
                 if(player2.isTurn()&&serverUser==2){
+                    /*avisar al servidor y activar*/
+                    sendTurn(x,y,vertical);
                     processTurn(x,y,vertical);
                 }
             }
         }
+    }
+
+    private void sendTurn(final int x, final int y, final boolean vertical){
+        final HttpClient client = new HttpClient("http://51.254.221.215");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String path = String.format("turn.php?user=%s&password=%s&id=%d&x=%d&y=%d&vertical=%b",
+                        user,password,id,x,y,vertical);
+                System.out.println("Path: "+path);
+                try {
+                    client.getJson(path);
+                }catch (Exception e){
+                    e.printStackTrace(System.out);
+                }
+            }
+        }).start();
     }
 
     private void iaProcessTurn(final int x,final  int y,final  boolean vertical){

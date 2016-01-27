@@ -12,11 +12,11 @@ public class GamePresenter implements IF_vp_game, IF_mp_game{
     private int last_user;
     private boolean last_vertical;
 
-    public GamePresenter (IF_pv_game vista, int map, int theme, int type, int id){
+    public GamePresenter (IF_pv_game vista, int map, int theme, int type, int id,String user, String password){
         this.vista = vista;
         firtsStick = true;
         this.vista.loadTheme(theme);
-        model = new GameModel(this,map,5,7,"prueba2","prueba2");
+        model = new GameModel(this,map,type,id,user,password);
         this.vista.changeTurn(model.getTurn());
         int scores [] = model.getScores();
         this.vista.changeScore(scores[0],scores[1]);

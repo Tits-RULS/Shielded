@@ -55,8 +55,10 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
         int map = intent.getIntExtra(ViewConstant.EXTRA_MAP, 0);
         int theme = intent.getIntExtra(ViewConstant.EXTRA_THEME,1);
         int type = intent.getIntExtra(ViewConstant.EXTRA_TYPE,0);
-        int id = intent.getIntExtra(ViewConstant.EXTRA_ID,0);
-        presenter = new GamePresenter(this,map,theme,type,id);
+        int id = intent.getIntExtra(ViewConstant.EXTRA_ID, 0);
+        String user = intent.getStringExtra(ViewConstant.EXTRA_USER);
+        String password = intent.getStringExtra(ViewConstant.EXTRA_PASSWORD);
+        presenter = new GamePresenter(this,map,theme,type,id,user,password);
     }
 
     @Override
