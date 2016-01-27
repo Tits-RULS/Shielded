@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/yelmo">
+    android:background="@drawable/yelmo" >
 
     <!-- Info del jugador activo -->
     <GridLayout
@@ -25,20 +25,19 @@
     </GridLayout>
 
     <Button
+        android:id="@+id/online_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/menu_1vs1"
-        android:onClick="toTheme"/>
+        android:text="@string/new_match"
+        android:onClick="toNewOnline"/>
 
-    <Button
+    <LinearLayout
+        android:id="@+id/online_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/menu_online"
-        android:onClick="toOnline"/>
+        android:orientation="vertical"
+        android:isScrollContainer="true">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/menu_bluetooth"/>
+    </LinearLayout>
 
 </LinearLayout>

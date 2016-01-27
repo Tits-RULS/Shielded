@@ -6,7 +6,5 @@ package eus.tta.shielded;
 
 //Interfaz que comunica al modelo con el presentador
 public interface IF_mp_menu {
-    public void toPresenterModelo();
-
 
 }

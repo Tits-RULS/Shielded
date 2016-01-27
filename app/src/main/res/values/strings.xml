@@ -15,6 +15,9 @@
     <!-- Strings para el menu Seleccion de tamaño -->
     <string name="dimension_title">SELECCIONA TABLERO</string>
 
+    <!-- Strings para el menu de VS -->
+    <string name="new_match">CREAR NUEVA PARTIDA</string>
+
     <!-- Strings para el menu de Ajustes -->
     <string name="login_label">Usuario</string>
     <string name="login_edit">Introduce nick</string>
@@ -26,6 +29,7 @@
     <string name="no_camera">No hay camara</string>
 
     <!-- Strings de notificaciones -->
+    <string name="register_please">Regístrate para habilitar este modo</string>
     <string name="horizontal_cam">Saque la foto en apaisado (Horizontal)</string>
     <string name="void_user">Por favor, rellene los campos</string>
     <string name="wrong_user">Usuario o contraseña incorrectos</string>

@@ -1,5 +1,7 @@
 package eus.tta.shielded;
 
+import org.json.JSONArray;
+
 /**
  * Created by kevin on 10/01/16.
  */
@@ -15,6 +17,7 @@ public interface IF_pm_menu {
     int GAME = 5;		//playing
     int HISTORY = 6;
     int SETTINGS = 7;
+    int ONLINE = 8;
 
     public void toCoverModelo();
 
@@ -27,6 +30,8 @@ public interface IF_pm_menu {
     public void toMatchModelo();
 
     public void toVSModelo();
+
+    public void toOnlineModelo();
 
     public void toThemeModelo();
 
@@ -48,6 +53,8 @@ public interface IF_pm_menu {
 
     public void loadUser(String nick, String pss);
 
+    public void loadMatches();
+
     public String getPic();
 
     public void setPic(String picPath);
@@ -67,5 +74,9 @@ public interface IF_pm_menu {
     public int getMap();
 
     public void setMap(int map);
+
+    public JSONArray getMatches();
+
+    public void setMatches(JSONArray matches);
 
 }

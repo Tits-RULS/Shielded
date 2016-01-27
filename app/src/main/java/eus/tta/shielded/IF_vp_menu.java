@@ -19,6 +19,16 @@ public interface IF_vp_menu {
     public void selectIAPresenterVista(int id);
     //Metodo para ir al modo Versus
     public void toVSPresenterVista ();
+
+    public void toOnlinePresenterVista();
+
+    public void loadMatchesPresenterVista();
+
+    public void showMatchesPresenterVista();
+
+    public void toNewOnlinePresenterVista();
+
+    public void toOnlineMatchPresenterVista();
     //Metodo para ir a Ajustes
     public void toSettingsPresenterVista ();
 
@@ -44,6 +54,7 @@ public interface IF_vp_menu {
 
     public boolean getIA();
     public String getNickname();
+    public String getPassword();
     public String getPicture();
     public int getType();
     public int getTheme();

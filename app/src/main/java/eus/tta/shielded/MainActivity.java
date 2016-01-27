@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -108,6 +110,12 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		setContentView(R.layout.menu_vs);
 		updateUserVista();
 	}
+
+	@Override
+	public void toOnlineVista(){
+		setContentView(R.layout.menu_server);
+		updateUserVista();
+	}
 	//Metodo para ir a Ajustes
 	@Override
 	public void toSettingsVista(){
@@ -134,6 +142,12 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 		Intent intent = new Intent(getBaseContext(), GameActivity.class);
 
+		/*set user*/
+		intent.putExtra(ViewConstant.EXTRA_USER, presentador.getNickname());
+
+		/*set user*/
+		intent.putExtra(ViewConstant.EXTRA_PASSWORD, presentador.getPassword());
+
 		/*set type*/
 		intent.putExtra(ViewConstant.EXTRA_TYPE, presentador.getType());
 
@@ -153,6 +167,9 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	@Override
 	public void notificacionesVista(String toast){
 		switch(toast){
+			case "register":
+				Toast.makeText(getApplicationContext(),R.string.register_please,Toast.LENGTH_SHORT).show();
+				break;
 			case "foto":
 				Toast.makeText(getApplicationContext(),R.string.horizontal_cam,Toast.LENGTH_SHORT).show();
 				break;
@@ -168,6 +185,45 @@ public class MainActivity extends Activity implements IF_pv_menu{
 			case "loged":
 				Toast.makeText(getApplicationContext(),R.string.loged_user,Toast.LENGTH_SHORT).show();
 				break;
+		}
+	}
+
+	@Override
+	public void disableLoginVista(){
+		String nick=presentador.getNickname();
+		//String nick = prefs.getString(PREF_NICK,null);
+		if(nick!=null) {
+			GridLayout gl1 =(GridLayout) findViewById(R.id.login_grid);
+			gl1.setVisibility(View.GONE);
+			Button bt =(Button) findViewById(R.id.login_button);
+			bt.setVisibility(View.GONE);
+			GridLayout gl2 =(GridLayout) findViewById(R.id.photo_grid);
+			gl2.setVisibility(View.VISIBLE);
+		}
+
+	}
+
+	@Override
+	public void updateUserVista(){
+		String nick=presentador.getNickname();
+
+		//String nick=prefs.getString(PREF_NICK, null);
+		//String pic = prefs.getString(PREF_PIC,null);
+		if(nick!=null) {
+			TextView tv = (TextView) findViewById(R.id.user_name);
+			tv.setText(nick);
+			String pic=presentador.getPicture();
+			if(pic.startsWith("http")){
+				getBitmapFromURL getBitmap = new getBitmapFromURL() {
+				};
+				getBitmap.execute();
+			}
+			else{
+				ImageView img = (ImageView) findViewById(R.id.user_pic);
+				img.setVisibility(View.VISIBLE);
+				img.setImageURI(Uri.parse(pic));
+			}
+
 		}
 	}
 
@@ -225,7 +281,79 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		presentador.toVSPresenterVista();
 	}
 
+	public void toOnline (View view){
+		loadOnline clase = new loadOnline() {
+		};
+		clase.execute();
 
+	}
+
+	private abstract class loadOnline extends AsyncTask<Void, Integer, Boolean> {
+		String pss;
+		String nick;
+
+		@Override
+		protected void onPreExecute() {
+
+		}
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			System.out.println("Durante");
+			presentador.loadMatchesPresenterVista();
+			//modelo.setPassword(pss);
+
+			return true;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			System.out.println("En el post");
+			presentador.toOnlinePresenterVista();
+			presentador.showMatchesPresenterVista();
+		}
+	}
+
+	@Override
+	public void updateOnlineVista(int id_match, String user2, String foto2){
+
+		GridLayout gl = new GridLayout(this);
+		GridLayout.LayoutParams gl_params = new GridLayout.LayoutParams();
+		gl_params.width=GridLayout.LayoutParams.WRAP_CONTENT;
+		gl_params.height=GridLayout.LayoutParams.WRAP_CONTENT;
+		gl.setLayoutParams(gl_params);
+		gl.setColumnCount(2);
+		gl.setRowCount(1);
+
+		Button bt = new Button(this);
+		bt.setId(id_match);
+		bt.setText("Continuar");
+		bt.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				toOnlineMatch(v);
+			}
+		});
+
+		gl.addView(bt);
+		TextView tv = new TextView(this);
+		tv.setText("VS " + user2);
+		gl.addView(tv);
+
+		final LinearLayout ll = (LinearLayout) findViewById(R.id.online_list);
+		System.out.println("What: " + gl);
+		ll.addView(gl);
+	}
+
+	public void toNewOnline(View view){
+		presentador.toNewOnlinePresenterVista();
+		start(view);
+	}
+
+	public void toOnlineMatch (View view){
+		presentador.toOnlineMatchPresenterVista();
+		start(view);
+	}
 
 	public void toTheme (View view){
 		presentador.toThemePresenterVista();
@@ -285,78 +413,8 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		editor.commit();
 	}
 
-	@Override
-	public void disableLoginVista(){
-		String nick=presentador.getNickname();
-		//String nick = prefs.getString(PREF_NICK,null);
-		if(nick!=null) {
-			GridLayout gl1 =(GridLayout) findViewById(R.id.login_grid);
-			gl1.setVisibility(View.GONE);
-			Button bt =(Button) findViewById(R.id.login_button);
-			bt.setVisibility(View.GONE);
-			GridLayout gl2 =(GridLayout) findViewById(R.id.photo_grid);
-			gl2.setVisibility(View.VISIBLE);
-		}
 
-	}
 
-	@Override
-	public void updateUserVista(){
-		String nick=presentador.getNickname();
-
-		//String nick=prefs.getString(PREF_NICK, null);
-		//String pic = prefs.getString(PREF_PIC,null);
-		if(nick!=null) {
-			TextView tv = (TextView) findViewById(R.id.user_name);
-			tv.setText(nick);
-			String pic=presentador.getPicture();
-			if(pic.startsWith("http")){
-				getBitmapFromURL getBitmap = new getBitmapFromURL() {
-				};
-				getBitmap.execute();
-			}
-			else{
-				ImageView img = (ImageView) findViewById(R.id.user_pic);
-				img.setVisibility(View.VISIBLE);
-				img.setImageURI(Uri.parse(pic));
-			}
-
-		}
-	}
-
-	private abstract class getBitmapFromURL extends AsyncTask<Void, Integer, Boolean> {
-			Bitmap bitmap;
-			String pic;
-			ImageView img;
-
-			@Override
-			protected void onPreExecute(){
-				this.pic=presentador.getPicture();
-				this.img = (ImageView) findViewById(R.id.user_pic);
-				img.setVisibility(View.VISIBLE);
-			}
-			@Override
-			protected Boolean doInBackground(Void... params) {
-				try{
-				URL url = new URL(pic);
-				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-				connection.setDoInput(true);
-				connection.connect();
-				InputStream input = connection.getInputStream();
-				this.bitmap = BitmapFactory.decodeStream(input);
-
-				}catch(IOException e){
-
-				}
-				return true;
-			}
-
-			@Override
-			protected void onPostExecute(Boolean result) {
-				img.setImageBitmap(bitmap);
-			}
-
-	}
 
 	public void selectPhoto(View view){
 		Intent intent = new Intent();
@@ -398,6 +456,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		return cursor.getString(column_index);
 	}
 
+	/*-- Clases --*/
 	private abstract class TareaAsincrona extends AsyncTask<Void, Integer, Boolean> {
 		String pss;
 		String nick;
@@ -425,6 +484,43 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		}
 
 	}
+
+	private abstract class getBitmapFromURL extends AsyncTask<Void, Integer, Boolean> {
+		Bitmap bitmap;
+		String pic;
+		ImageView img;
+
+		@Override
+		protected void onPreExecute(){
+			this.pic=presentador.getPicture();
+			this.img = (ImageView) findViewById(R.id.user_pic);
+			img.setVisibility(View.VISIBLE);
+		}
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			try{
+				URL url = new URL(pic);
+				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+				connection.setDoInput(true);
+				connection.connect();
+				InputStream input = connection.getInputStream();
+				this.bitmap = BitmapFactory.decodeStream(input);
+
+			}catch(IOException e){
+
+			}
+			return true;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			img.setImageBitmap(bitmap);
+		}
+
+	}
+
+
+
 	/*public void toThemeBT(View view){
 		bt=true;
 		toTheme(view);

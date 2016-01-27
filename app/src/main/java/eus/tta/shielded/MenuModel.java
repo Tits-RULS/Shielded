@@ -1,19 +1,9 @@
 package eus.tta.shielded;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -35,9 +25,12 @@ public class MenuModel implements IF_pm_menu{
     private String password;
     private int resultado;
     private String picPath;
+    private JSONArray matches;
 
     /*-- Métodos de clase --*/
     public MenuModel(IF_mp_menu presentador){
+        this.nickname=null;
+        this.password=null;
         this.presentador=presentador;
         httpClient = new HttpClient("http://51.254.221.215");
     }
@@ -47,54 +40,51 @@ public class MenuModel implements IF_pm_menu{
     public void toCoverModelo(){
         state=COVER;
         IA=false;
-        presentador.toPresenterModelo();
     }
     @Override
     public void toMenuModelo() {
         state=MENU;
         IA=false;
-        presentador.toPresenterModelo();
     }
     @Override
     public void toCampanaModelo(){
         state=HISTORY;
         IA=false;
-        presentador.toPresenterModelo();
     }
     @Override
     public void toMatchModelo() {
         state=MATCH;
         IA=true;
-        presentador.toPresenterModelo();
     }
     @Override
     public void toVSModelo() {
         state=MATCH;
         IA=false;
-        presentador.toPresenterModelo();
+    }
+
+    @Override
+    public void toOnlineModelo(){
+        state=ONLINE;
+        IA=false;
     }
     @Override
     public void toSettingsModelo(){
         state=SETTINGS;
         IA=false;
-        presentador.toPresenterModelo();
     }
     @Override
     public void toThemeModelo(){
         state=THEME;
-        presentador.toPresenterModelo();
     }
 
     @Override
     public void toMapsModelo(){
         state=MAP;
-        presentador.toPresenterModelo();
     }
 
     @Override
     public void toGameModelo(){
         state=GAME;
-        presentador.toPresenterModelo();
     }
 
     @Override
@@ -116,7 +106,7 @@ public class MenuModel implements IF_pm_menu{
     }
 
     @Override
-    public void loadUser(final String nick,final String pss) {
+    public void loadUser(String nick,String pss) {
         if (nick.isEmpty() || pss.isEmpty()) {
             setResultado(-2);
         } else {
@@ -136,6 +126,26 @@ public class MenuModel implements IF_pm_menu{
                     System.out.println("cargando foto...");
                     setPic(foto);
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void loadMatches() {
+        if (this.nickname==null || this.password==null) {
+            setResultado(-3);
+        } else {
+            try {
+                JSONObject json = httpClient.getJson(String.format("getmatches.php?user=%s&password=%s", this.nickname, this.password));
+                System.out.println("Perfil: " + json);
+                matches = json.getJSONArray("matches");
+                setMatches(matches);
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -195,6 +205,15 @@ public class MenuModel implements IF_pm_menu{
     @Override
     public void setTheme(int theme){
         this.themeID = theme;
+    }
+
+    @Override
+    public JSONArray getMatches(){
+        return matches;
+    }
+    @Override
+    public void setMatches(JSONArray matches){
+        this.matches = matches;
     }
 
     @Override
