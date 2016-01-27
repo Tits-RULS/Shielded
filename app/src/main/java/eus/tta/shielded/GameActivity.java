@@ -144,6 +144,21 @@ public class GameActivity extends Activity implements IF_pv_game, View.OnClickLi
                 music=R.raw.juegohirule;
                 background = getResources().getDrawable(R.drawable.hyrule);
                 break;
+            default:
+                /*japon*/
+                square1=getResources().getDrawable(R.drawable.japonrojo);
+                square2=getResources().getDrawable(R.drawable.japonverde);
+                stickv1=getResources().getDrawable(R.drawable.katanaroja2);
+                stickv2=getResources().getDrawable(R.drawable.katanaverde2);
+                stickh1=getResources().getDrawable(R.drawable.katanarojah2);
+                stickh2=getResources().getDrawable(R.drawable.katanaverdeh2);
+                stickv1r=getResources().getDrawable(R.drawable.katanaresaltadar);
+                stickv2r=getResources().getDrawable(R.drawable.katanaresaltadav);
+                stickh1r=getResources().getDrawable(R.drawable.katanaresaltadarh);
+                stickh2r=getResources().getDrawable(R.drawable.katanaresaltadavh);
+                music=R.raw.juegojapon;
+                background = getResources().getDrawable(R.drawable.japon);
+                break;
         }
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.game_layout);

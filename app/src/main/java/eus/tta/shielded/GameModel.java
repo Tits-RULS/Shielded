@@ -33,7 +33,7 @@ public class GameModel implements IF_pm_game {
 
     private int serverUser;
     private boolean loadingMatch;
-    final int id;
+    private int id;
     private String user;
     private String password;
 
@@ -48,7 +48,7 @@ public class GameModel implements IF_pm_game {
     private IA ia;
 
 
-    public GameModel(IF_mp_game presenter,int map, int type, int id,String user, String password){
+    public GameModel(IF_mp_game presenter,int map,int theme, int type, int id,String user, String password){
         this.presenter = presenter;
         this.type = type;
         this.id = id;
@@ -155,6 +155,7 @@ public class GameModel implements IF_pm_game {
             @Override
             public void run() {
                 String path = String.format(("getmatch.php?user=%s&password=%s&id=%d"),user,password,id);
+                System.out.println("path: "+path);
                 try {
                     presenter.disable();
                     JSONObject json = client.getJson(path);
@@ -186,7 +187,7 @@ public class GameModel implements IF_pm_game {
     }
 
     private void loadMatch(JSONObject json) throws JSONException, InterruptedException {
-        System.out.println("loadMatch");
+        id = json.getInt("id");
         serverUser = json.getInt("usuario");
         JSONArray jsonArray = json.getJSONArray("turns");
         JSONObject turn;
@@ -225,6 +226,7 @@ public class GameModel implements IF_pm_game {
     }
 
     private void serverProcessTurn(int x, int y, boolean vertical){
+        System.out.println("StickPresed: "+x+", "+y+", "+vertical);
         if(loadingMatch){
             processTurn(x,y,vertical);
         }else{
@@ -281,6 +283,7 @@ public class GameModel implements IF_pm_game {
     }
 
     private void processTurn(int x, int y, boolean vertical){
+        System.out.println("process turn");
         boolean stickAct = false;
         boolean squareAct = false;
         if(vertical){

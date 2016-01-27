@@ -106,7 +106,8 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     }
 
     @Override
-    public void toOnlineMatchPresenterVista(){
+    public void toOnlineMatchPresenterVista(int id){
+        modelo.setId(id);
         modelo.setType(ModelConstant.TYPE_OS);
     }
     @Override
@@ -311,6 +312,9 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     public int getMap(){
         return modelo.getMap();
     }
+
+    @Override
+    public int getId() { return modelo.getId();}
 
     /*-- Métodos de clase --*/
     public void changeVista() {

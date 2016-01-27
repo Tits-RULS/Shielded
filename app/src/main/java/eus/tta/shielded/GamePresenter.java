@@ -16,7 +16,7 @@ public class GamePresenter implements IF_vp_game, IF_mp_game{
         this.vista = vista;
         firtsStick = true;
         this.vista.loadTheme(theme);
-        model = new GameModel(this,map,type,id,user,password);
+        model = new GameModel(this,map,theme,type,id,user,password);
         this.vista.changeTurn(model.getTurn());
         int scores [] = model.getScores();
         this.vista.changeScore(scores[0],scores[1]);

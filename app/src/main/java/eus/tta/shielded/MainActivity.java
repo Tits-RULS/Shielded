@@ -163,6 +163,8 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		/*set theme*/
 		intent.putExtra(ViewConstant.EXTRA_THEME, presentador.getTheme());
 
+		/*set id*/
+		intent.putExtra(ViewConstant.EXTRA_ID, presentador.getId());
 		startActivity(intent);
 	}
 	@Override
@@ -333,7 +335,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	}
 
 	public void toOnlineMatch (View view){
-		presentador.toOnlineMatchPresenterVista();
+		presentador.toOnlineMatchPresenterVista(view.getId());
 		start(view);
 	}
 

@@ -95,20 +95,4 @@ public class HttpClient {
                 conn.disconnect();
         }
     }
-
-    public int postJson (final JSONObject json, String path) throws IOException {
-        HttpURLConnection conn = null;
-        try{
-            conn = getConnection(path);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type","application/json; charset=UTF-8");
-            try(PrintWriter pw = new PrintWriter(conn.getOutputStream())){
-                pw.print(json.toString());
-                return conn.getResponseCode();
-            }
-        } finally {
-            if(conn != null)
-                conn.disconnect();
-        }
     }
-}

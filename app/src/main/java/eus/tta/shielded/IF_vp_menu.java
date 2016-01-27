@@ -29,7 +29,7 @@ public interface IF_vp_menu {
 
     public void toNewOnlinePresenterVista();
 
-    public void toOnlineMatchPresenterVista();
+    public void toOnlineMatchPresenterVista(int id);
     //Metodo para ir a Ajustes
     public void toSettingsPresenterVista ();
 
@@ -62,4 +62,5 @@ public interface IF_vp_menu {
     public int getType();
     public int getTheme();
     public int getMap();
+    public int getId();
 }

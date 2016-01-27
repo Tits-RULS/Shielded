@@ -23,6 +23,7 @@ public class MenuModel implements IF_pm_menu{
     private int themeID;
     private int mapID;
     private int typeID;
+    private int ID;
     //Parametros de login
     private String nickname;
     private String password;
@@ -241,6 +242,16 @@ public class MenuModel implements IF_pm_menu{
     @Override
     public void setMap(int map){
         this.mapID = map;
+    }
+
+    @Override
+    public int getId(){
+        return ID;
+    }
+
+    @Override
+    public void setId(int id){
+        this.ID = id;
     }
 
 }

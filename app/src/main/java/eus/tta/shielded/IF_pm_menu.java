@@ -77,6 +77,10 @@ public interface IF_pm_menu {
 
     public void setMap(int map);
 
+    public int getId();
+
+    public void setId(int id);
+
     public JSONArray getMatches();
 
     public void setMatches(JSONArray matches);
