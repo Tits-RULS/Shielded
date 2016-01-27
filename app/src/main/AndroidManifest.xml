@@ -20,31 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Game"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name=".GameActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".GameIA"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".GameCliente"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".GameServer"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:screenOrientation="portrait" >
