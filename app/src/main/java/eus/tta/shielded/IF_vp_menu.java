@@ -8,6 +8,8 @@ import android.content.Intent;
 
 //Interfaz que comunica a la vista con el presentador
 public interface IF_vp_menu {
+    public void initOnlinePresenterVista(String nick, String pss, String pic);
+
     public void toCoverPresenterVista();
 
     public void toMenuPresenterVista();

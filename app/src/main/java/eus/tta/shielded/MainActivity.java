@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
@@ -52,7 +53,6 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	private static final int PICTURE_REQUEST_CODE=2;
 
 	IF_vp_menu presentador;
-	SharedPreferences prefs;
 
 	/*-- Metodos sobreescritos --*/
 	//Metodo al arrancar la actividad (cuando el jugador arranque juego)
@@ -66,6 +66,14 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		player = MediaPlayer.create(this, R.raw.menu);
 		player.setLooping(true);
 		presentador = new MenuPresenter(this);
+
+		SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+		String nick=sharedPreferences.getString("PREF_NICK", null);
+		String pss=sharedPreferences.getString("PREF_PASS",null);
+		String pic=sharedPreferences.getString("PREF_PIC",null);
+
+		presentador.initOnlinePresenterVista(nick,pss,pic);
+
 		//prefs = this.getPreferences("eus.tta.shielded", MODE_PRIVATE);
 	}
 
@@ -142,11 +150,15 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 		Intent intent = new Intent(getBaseContext(), GameActivity.class);
 
-		/*set user*/
-		intent.putExtra(ViewConstant.EXTRA_USER, presentador.getNickname());
+		SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+		String nick=sharedPreferences.getString("PREF_NICK", null);
+		String pss=sharedPreferences.getString("PREF_PASS",null);
 
 		/*set user*/
-		intent.putExtra(ViewConstant.EXTRA_PASSWORD, presentador.getPassword());
+		intent.putExtra(ViewConstant.EXTRA_USER, nick);
+
+		/*set user*/
+		intent.putExtra(ViewConstant.EXTRA_PASSWORD, pss);
 
 		/*set type*/
 		intent.putExtra(ViewConstant.EXTRA_TYPE, presentador.getType());
@@ -190,8 +202,8 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 	@Override
 	public void disableLoginVista(){
-		String nick=presentador.getNickname();
-		//String nick = prefs.getString(PREF_NICK,null);
+		SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+		String nick=sharedPreferences.getString("PREF_NICK", null);
 		if(nick!=null) {
 			GridLayout gl1 =(GridLayout) findViewById(R.id.login_grid);
 			gl1.setVisibility(View.GONE);
@@ -205,14 +217,13 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 	@Override
 	public void updateUserVista(){
-		String nick=presentador.getNickname();
+		SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+		String nick=sharedPreferences.getString("PREF_NICK", null);
 
-		//String nick=prefs.getString(PREF_NICK, null);
-		//String pic = prefs.getString(PREF_PIC,null);
 		if(nick!=null) {
 			TextView tv = (TextView) findViewById(R.id.user_name);
 			tv.setText(nick);
-			String pic=presentador.getPicture();
+			String pic = sharedPreferences.getString("PREF_PIC",null);
 			if(pic.startsWith("http")){
 				getBitmapFromURL getBitmap = new getBitmapFromURL() {
 				};
@@ -225,6 +236,37 @@ public class MainActivity extends Activity implements IF_pv_menu{
 			}
 
 		}
+	}
+
+	@Override
+	public void updateOnlineVista(int id_match, String user2, String foto2){
+
+		GridLayout gl = new GridLayout(this);
+		GridLayout.LayoutParams gl_params = new GridLayout.LayoutParams();
+		gl_params.width=GridLayout.LayoutParams.WRAP_CONTENT;
+		gl_params.height=GridLayout.LayoutParams.WRAP_CONTENT;
+		gl.setLayoutParams(gl_params);
+		gl.setColumnCount(2);
+		gl.setRowCount(1);
+
+		Button bt = new Button(this);
+		bt.setId(id_match);
+		bt.setText("Continuar");
+		bt.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				toOnlineMatch(v);
+			}
+		});
+
+		gl.addView(bt);
+		TextView tv = new TextView(this);
+		tv.setText("VS " + user2);
+		gl.addView(tv);
+
+		final LinearLayout ll = (LinearLayout) findViewById(R.id.online_list);
+		System.out.println("What: " + gl);
+		ll.addView(gl);
 	}
 
 	@Override
@@ -288,37 +330,6 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 	}
 
-	@Override
-	public void updateOnlineVista(int id_match, String user2, String foto2){
-
-		GridLayout gl = new GridLayout(this);
-		GridLayout.LayoutParams gl_params = new GridLayout.LayoutParams();
-		gl_params.width=GridLayout.LayoutParams.WRAP_CONTENT;
-		gl_params.height=GridLayout.LayoutParams.WRAP_CONTENT;
-		gl.setLayoutParams(gl_params);
-		gl.setColumnCount(2);
-		gl.setRowCount(1);
-
-		Button bt = new Button(this);
-		bt.setId(id_match);
-		bt.setText("Continuar");
-		bt.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				toOnlineMatch(v);
-			}
-		});
-
-		gl.addView(bt);
-		TextView tv = new TextView(this);
-		tv.setText("VS " + user2);
-		gl.addView(tv);
-
-		final LinearLayout ll = (LinearLayout) findViewById(R.id.online_list);
-		System.out.println("What: " + gl);
-		ll.addView(gl);
-	}
-
 	public void toNewOnline(View view){
 		presentador.toNewOnlinePresenterVista();
 		start(view);
@@ -378,14 +389,27 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		clase.execute();
 	}
 
+
+
+
+
 	//@Override
-	private void saveLoginVista(){
-		SharedPreferences.Editor editor = prefs.edit();
-		//editor.putString(PREF_NICK, presentador.getNickname());
-		//editor.putString(PREF_PASS)
-		//editor.putString(PREF_PIC, presentador.getPicture());
+	public void saveLoginVista(){
+
+		SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPreferences.edit();
+
+		editor.putString("PREF_NICK", presentador.getNickname());
+		editor.putString("PREF_PASS", presentador.getPassword());
+		editor.putString("PREF_PIC", presentador.getPicture());
 		editor.commit();
+
+		System.out.println("UserPref: "+sharedPreferences.getString("PREF_NICK","garcia"));
 	}
+
+
+
+
 
 	public void selectPhoto(View view){
 		Intent intent = new Intent();
@@ -432,28 +456,6 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		return cursor.getString(column_index);
 	}
 
-	private abstract class uploadPhoto extends AsyncTask<Void, Integer, Boolean> {
-		String picPath;
-		@Override
-		protected void onPreExecute() {
-			picPath = presentador.getPicture();
-		}
-
-		@Override
-		protected Boolean doInBackground(Void... params) {
-			System.out.println("Durante");
-			presentador.uploadPicturePresenterVista(picPath);
-
-			return true;
-		}
-
-		@Override
-		protected void onPostExecute(Boolean result) {
-			System.out.println("En el post");
-			updateUserVista();
-		}
-	}
-
 	/*-- Clases --*/
 	private abstract class TareaAsincrona extends AsyncTask<Void, Integer, Boolean> {
 		String pss;
@@ -478,6 +480,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		@Override
 		protected void onPostExecute(Boolean result) {
 			System.out.println("En el post");
+			saveLoginVista();
 			presentador.showUserPresenterVista();
 		}
 
@@ -490,7 +493,8 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 		@Override
 		protected void onPreExecute(){
-			this.pic=presentador.getPicture();
+			SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+			this.pic=sharedPreferences.getString("PREF_PIC", null);
 			this.img = (ImageView) findViewById(R.id.user_pic);
 			img.setVisibility(View.VISIBLE);
 		}
@@ -518,8 +522,6 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	}
 
 	private abstract class loadOnline extends AsyncTask<Void, Integer, Boolean> {
-		String pss;
-		String nick;
 
 		@Override
 		protected void onPreExecute() {
@@ -540,6 +542,29 @@ public class MainActivity extends Activity implements IF_pv_menu{
 			System.out.println("En el post");
 			presentador.toOnlinePresenterVista();
 			presentador.showMatchesPresenterVista();
+		}
+	}
+
+	private abstract class uploadPhoto extends AsyncTask<Void, Integer, Boolean> {
+		String picPath;
+		@Override
+		protected void onPreExecute() {
+			SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+			picPath = sharedPreferences.getString("PREF_PIC", null);
+		}
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			System.out.println("Durante");
+			presentador.uploadPicturePresenterVista(picPath);
+
+			return true;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			System.out.println("En el post");
+			updateUserVista();
 		}
 	}
 

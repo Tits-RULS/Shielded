@@ -24,52 +24,13 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     }
 
     /*-- Métodos sobreescritos --*/
-    public void changeVista() {
-        switch(modelo.getState()){
-            case IF_pm_menu.COVER:
-                System.out.println("Pasando a Cover");
-                vista.toCoverVista();
-                break;
-            case IF_pm_menu.MENU:
-                System.out.println("Pasando a Menu");
-                vista.toMenuVista();
-                break;
-            case IF_pm_menu.MATCH:
-                if(modelo.getIA()) {
-                    System.out.println("Pasando a Partida");
-                    vista.toMatchVista();
-                }else {
-                    System.out.println("Pasando a Versus");
-                    vista.toVSVista();
-                }
-                break;
-            case IF_pm_menu.THEME:
-                System.out.println("Pasando a Temas");
-                vista.toThemeVista();
-                break;
-            case IF_pm_menu.MAP:
-                System.out.println("Pasando a Mapas");
-                vista.toMapsVista();
-                break;
-            case IF_pm_menu.GAME:
-                System.out.println("Pasando al juego");
-                vista.toGameVista();
-                break;
-            case IF_pm_menu.HISTORY:
-                System.out.println("Pasando a Campaña");
-                vista.toCampanaVista();
-                break;
-            case IF_pm_menu.SETTINGS:
-                System.out.println("Pasando a Ajustes");
-                vista.toSettingsVista();
-                break;
-            case IF_pm_menu.ONLINE:
-                System.out.println("Pasando a Online");
-                vista.toOnlineVista();
-                break;
-        }
+    @Override
+    public void initOnlinePresenterVista(String nick, String pss, String pic){
+        System.out.println("Se inicializa: " + nick + pss + pic);
+        modelo.setNick(nick);
+        modelo.setPassword(pss);
+        modelo.setPic(pic);
     }
-
     @Override
     public void toCoverPresenterVista(){
 
@@ -350,5 +311,52 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     @Override
     public int getMap(){
         return modelo.getMap();
+    }
+
+    /*-- Métodos de clase --*/
+    public void changeVista() {
+        switch(modelo.getState()){
+            case IF_pm_menu.COVER:
+                System.out.println("Pasando a Cover");
+                vista.toCoverVista();
+                break;
+            case IF_pm_menu.MENU:
+                System.out.println("Pasando a Menu");
+                vista.toMenuVista();
+                break;
+            case IF_pm_menu.MATCH:
+                if(modelo.getIA()) {
+                    System.out.println("Pasando a Partida");
+                    vista.toMatchVista();
+                }else {
+                    System.out.println("Pasando a Versus");
+                    vista.toVSVista();
+                }
+                break;
+            case IF_pm_menu.THEME:
+                System.out.println("Pasando a Temas");
+                vista.toThemeVista();
+                break;
+            case IF_pm_menu.MAP:
+                System.out.println("Pasando a Mapas");
+                vista.toMapsVista();
+                break;
+            case IF_pm_menu.GAME:
+                System.out.println("Pasando al juego");
+                vista.toGameVista();
+                break;
+            case IF_pm_menu.HISTORY:
+                System.out.println("Pasando a Campaña");
+                vista.toCampanaVista();
+                break;
+            case IF_pm_menu.SETTINGS:
+                System.out.println("Pasando a Ajustes");
+                vista.toSettingsVista();
+                break;
+            case IF_pm_menu.ONLINE:
+                System.out.println("Pasando a Online");
+                vista.toOnlineVista();
+                break;
+        }
     }
 }
