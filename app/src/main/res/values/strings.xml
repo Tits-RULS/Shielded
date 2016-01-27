@@ -40,7 +40,7 @@
     <!-- Otros -->
     <string name="menu_1vs1">1vs1</string>
     <string name="menu_online">Online</string>
-    <string name="menu_bluetooth">Bluetooth</string>
+    <string name="menu_bluetooth">Bluetooth (No disponible)</string>
     <string name="menu_facil">Fácil</string>
     <string name="menu_medio">Medio</string>
     <string name="menu_dificil">Difícil</string>

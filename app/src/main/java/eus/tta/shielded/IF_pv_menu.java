@@ -21,7 +21,7 @@ public interface IF_pv_menu {
 
     public void toOnlineVista();
 
-    public void updateOnlineVista(int id_match, String user2, String foto2);
+    public void updateOnlineVista(int id_match, String user1, String user2, String foto2);
 
     //Metodo para ir a Ajustes
     public void toSettingsVista ();

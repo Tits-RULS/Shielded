@@ -93,7 +93,7 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
                 String user2 = matches.getJSONObject(i).getString("user2");
                 String foto2 = matches.getJSONObject(i).getString("foto2");
                 int id_match = matches.getJSONObject(i).getInt("id");
-                vista.updateOnlineVista(id_match, user2, foto2);
+                vista.updateOnlineVista(id_match, user1, user2, foto2);
             }
         }catch(JSONException e){
 

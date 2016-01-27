@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -231,7 +233,7 @@ public class MainActivity extends Activity implements IF_pv_menu{
 	}
 
 	@Override
-	public void updateOnlineVista(int id_match, String user2, String foto2){
+	public void updateOnlineVista(int id_match, String user1, String user2, String foto2){
 
 		GridLayout gl = new GridLayout(this);
 		GridLayout.LayoutParams gl_params = new GridLayout.LayoutParams();
@@ -253,7 +255,10 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 		gl.addView(bt);
 		TextView tv = new TextView(this);
-		tv.setText("VS " + user2);
+		tv.setText(user1 + " VS " + user2);
+		tv.setTypeface(null, Typeface.BOLD);
+		tv.setTextColor(Color.BLACK);
+		tv.setBackgroundColor(Color.WHITE);
 		gl.addView(tv);
 
 		final LinearLayout ll = (LinearLayout) findViewById(R.id.online_list);
@@ -381,10 +386,6 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		clase.execute();
 	}
 
-
-
-
-
 	//@Override
 	public void saveLoginVista(){
 
@@ -398,10 +399,6 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 		System.out.println("UserPref: "+sharedPreferences.getString("PREF_NICK","garcia"));
 	}
-
-
-
-
 
 	public void selectPhoto(View view){
 		Intent intent = new Intent();
