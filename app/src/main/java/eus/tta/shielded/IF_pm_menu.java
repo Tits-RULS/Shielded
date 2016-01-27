@@ -55,6 +55,8 @@ public interface IF_pm_menu {
 
     public void loadMatches();
 
+    public void uploadPictureModelo(String picPath);
+
     public String getPic();
 
     public void setPic(String picPath);

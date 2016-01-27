@@ -38,6 +38,8 @@ public interface IF_vp_menu {
 
     public void selectPhotoPresenterVista(String photoPath);
 
+    public void uploadPicturePresenterVista (String picPath);
+
     public void toThemePresenterVista();
 
     public void selectThemePresenterVista(int id);

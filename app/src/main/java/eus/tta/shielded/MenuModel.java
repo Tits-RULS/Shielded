@@ -4,7 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by kevin on 10/01/16.
@@ -154,6 +157,21 @@ public class MenuModel implements IF_pm_menu{
         }
     }
 
+    @Override
+    public void uploadPictureModelo(String picPath){
+        String nick = getNick();
+        String pss = getPassword();
+        String userPath = String.format("foto.php?user=%s&password=%s", nick, pss);
+        File file = new File(picPath);
+        String name = file.getName();
+        try {
+            InputStream is = new FileInputStream(picPath);
+            httpClient.postFile(userPath, is, name);
+        }catch(Exception e){
+
+        }
+
+    }
     @Override
     public int getResultado(){
         return resultado;

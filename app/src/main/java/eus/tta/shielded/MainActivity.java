@@ -288,32 +288,6 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 	}
 
-	private abstract class loadOnline extends AsyncTask<Void, Integer, Boolean> {
-		String pss;
-		String nick;
-
-		@Override
-		protected void onPreExecute() {
-
-		}
-
-		@Override
-		protected Boolean doInBackground(Void... params) {
-			System.out.println("Durante");
-			presentador.loadMatchesPresenterVista();
-			//modelo.setPassword(pss);
-
-			return true;
-		}
-
-		@Override
-		protected void onPostExecute(Boolean result) {
-			System.out.println("En el post");
-			presentador.toOnlinePresenterVista();
-			presentador.showMatchesPresenterVista();
-		}
-	}
-
 	@Override
 	public void updateOnlineVista(int id_match, String user2, String foto2){
 
@@ -413,9 +387,6 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		editor.commit();
 	}
 
-
-
-
 	public void selectPhoto(View view){
 		Intent intent = new Intent();
 		intent.setType("image/*");
@@ -436,14 +407,19 @@ public class MainActivity extends Activity implements IF_pv_menu{
 				String selectedImagePath = getPath(selectedImageUri);
 				System.out.println("Image Path : " + selectedImagePath);
 				presentador.selectPhotoPresenterVista(selectedImagePath);
-				updateUserVista();
+				uploadPhoto clase = new uploadPhoto() {
+				};
+				clase.execute();
 			}
 			if (requestCode == PICTURE_REQUEST_CODE){
 				Uri takenImageUri = data.getData();
 				String selectedImagePath = getPath(takenImageUri);
 				System.out.println("Image Path : " + selectedImagePath);
 				presentador.selectPhotoPresenterVista(selectedImagePath);
-				updateUserVista();
+				uploadPhoto clase = new uploadPhoto() {
+				};
+				clase.execute();
+
 			}
 		}
 	}
@@ -454,6 +430,28 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 		cursor.moveToFirst();
 		return cursor.getString(column_index);
+	}
+
+	private abstract class uploadPhoto extends AsyncTask<Void, Integer, Boolean> {
+		String picPath;
+		@Override
+		protected void onPreExecute() {
+			picPath = presentador.getPicture();
+		}
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			System.out.println("Durante");
+			presentador.uploadPicturePresenterVista(picPath);
+
+			return true;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			System.out.println("En el post");
+			updateUserVista();
+		}
 	}
 
 	/*-- Clases --*/
@@ -519,7 +517,31 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 	}
 
+	private abstract class loadOnline extends AsyncTask<Void, Integer, Boolean> {
+		String pss;
+		String nick;
 
+		@Override
+		protected void onPreExecute() {
+
+		}
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			System.out.println("Durante");
+			presentador.loadMatchesPresenterVista();
+			//modelo.setPassword(pss);
+
+			return true;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			System.out.println("En el post");
+			presentador.toOnlinePresenterVista();
+			presentador.showMatchesPresenterVista();
+		}
+	}
 
 	/*public void toThemeBT(View view){
 		bt=true;

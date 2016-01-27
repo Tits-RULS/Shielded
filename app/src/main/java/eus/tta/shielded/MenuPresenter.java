@@ -322,6 +322,10 @@ public class MenuPresenter implements IF_vp_menu, IF_mp_menu {
     }
 
     @Override
+    public void uploadPicturePresenterVista(String picPath){
+        modelo.uploadPictureModelo(picPath);
+    }
+    @Override
     public String getNickname(){
         return modelo.getNick();
     }
