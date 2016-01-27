@@ -1,9 +1,8 @@
 package eus.tta.shielded;
 
-
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,13 +10,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -29,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -69,10 +61,10 @@ public class MainActivity extends Activity implements IF_pv_menu{
 
 		SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
 		String nick=sharedPreferences.getString("PREF_NICK", null);
-		String pss=sharedPreferences.getString("PREF_PASS",null);
+		String pss=sharedPreferences.getString("PREF_PASS", null);
 		String pic=sharedPreferences.getString("PREF_PIC",null);
 
-		presentador.initOnlinePresenterVista(nick,pss,pic);
+		presentador.initOnlinePresenterVista(nick, pss, pic);
 
 		//prefs = this.getPreferences("eus.tta.shielded", MODE_PRIVATE);
 	}
@@ -540,8 +532,16 @@ public class MainActivity extends Activity implements IF_pv_menu{
 		@Override
 		protected void onPostExecute(Boolean result) {
 			System.out.println("En el post");
-			presentador.toOnlinePresenterVista();
-			presentador.showMatchesPresenterVista();
+			SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+			String nick = sharedPreferences.getString("PREF_NICK", null);
+
+			if(nick == null){
+				presentador.showUserPresenterVista();
+			}
+			else{
+				presentador.toOnlinePresenterVista();
+				presentador.showMatchesPresenterVista();
+			}
 		}
 	}
 

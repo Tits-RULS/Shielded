@@ -1,6 +1,5 @@
 package eus.tta.shielded;
 
-import android.content.Intent;
 
 /**
  * Created by kevin on 10/01/16.

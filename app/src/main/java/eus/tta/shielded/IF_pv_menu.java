@@ -1,7 +1,5 @@
 package eus.tta.shielded;
 
-import android.view.View;
-
 /**
  * Created by kevin on 10/01/16.
  */

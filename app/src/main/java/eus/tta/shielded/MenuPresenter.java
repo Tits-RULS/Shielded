@@ -4,7 +4,6 @@ package eus.tta.shielded;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.io.IOException;
 
 /**
  * Created by kevin on 10/01/16.
